@@ -1,0 +1,34 @@
+{
+  "name": "tp1-collecte-de-donnees",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "build": "node esbuild.config.js",
+    "dev": "nodemon --watch src --exec \"node esbuild.config.js && node dist/app.js\""
+  },
+  "devDependencies": {
+    "@types/chai": "^5.2.2",
+    "@types/cookie-parser": "^1.4.9",
+    "@types/mocha": "^10.0.10",
+    "chai": "^6.0.1",
+    "esbuild": "^0.25.10",
+    "faker": "^6.6.6",
+    "mocha": "^11.7.2",
+    "nodemon": "^3.1.10",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "@snap/ts-inject": "^0.3.2",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.5.2",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "ts-node": "^10.9.2",
+    "winston": "^3.17.0"
+  }
+}
