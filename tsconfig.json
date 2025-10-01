@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "es2022",
+        "moduleResolution": "node",
+        "rootDir": "./src",
+        "esModuleInterop": true,                 
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "allowImportingTsExtensions": true,
+        "noEmit": true,
+    },
+    "include": ["./src/**/*"]
+}

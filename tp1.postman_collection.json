@@ -1,0 +1,464 @@
+{
+	"info": {
+		"_postman_id": "194a3840-a579-4174-969e-ed34321f18bf",
+		"name": "tp1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44225006"
+	},
+	"item": [
+		{
+			"name": "authentification",
+			"item": [
+				{
+					"name": "/register (create account)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"204\", ()=>{",
+									"    pm.expect(pm.response.code).to.eql(204)",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test@test.com\",\n    \"password\": \"test1212\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/register",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/medias (should fail)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"401 / error: required authorization\", ()=>{",
+									"    pm.expect(pm.response.code).to.eql(401);",
+									"    pm.expect(pm.response.json().error).to.eql(\"required authorization\")",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/medias",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"medias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/login (as admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"204\", ()=>{",
+									"    pm.expect(pm.response.code).to.eql(204)",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@admin.com\",\n    \"password\": \"admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/medias (should succeed)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"204\", ()=>{",
+									"    pm.expect(pm.response.code).to.eql(204);",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"admin-test\",\n    \"genre\": \"admin-test\",\n    \"year\": 2002,\n    \"rating\": 4,\n    \"platform\": \"netflix\",\n    \"duration\": 10000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/medias",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"medias"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/medias (all)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/medias",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"medias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/medias (search)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/medias?title=sh&year=2019&type=film",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"medias"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "sh"
+						},
+						{
+							"key": "year",
+							"value": "2019"
+						},
+						{
+							"key": "type",
+							"value": "film"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/films (add film)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"test\",\n    \"genre\": \"test\",\n    \"year\": 2002,\n    \"rating\": 4,\n    \"platform\": \"netflix\",\n    \"duration\": 10000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/films",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"films"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/series (add serie)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"test-serie\",\n    \"genre\": \"test\",\n    \"year\": 2002,\n    \"rating\": 3,\n    \"platform\": \"netflix\",\n    \"status\": \"ongoing\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/series",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"series"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/seasons (add season)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"releaseDate\": \"{{$randomDatePast}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/seasons/5",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"seasons",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/episodes (add episode)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"{{$guid}}\",\n    \"title\": \"test-episode-title\",\n    \"duration\": \"{{$randomInt}}\",\n    \"episodeNumber\": \"{{$randomInt}}\",\n    \"watched\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/episodes/4",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"episodes",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/episodes (set to watch)",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/episodes/1",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"episodes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/films (sans titre)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"genre\": \"test\",\n    \"year\": 2002,\n    \"rating\": 4,\n    \"platform\": \"netflix\",\n    \"duration\": 10000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/films",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"films"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/films (titre invalide)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"$$$\",\n    \"genre\": \"test\",\n    \"year\": 2002,\n    \"rating\": 4,\n    \"platform\": \"netflix\",\n    \"duration\": 10000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/films",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"films"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/films (année future)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"test-1212\",\n    \"genre\": \"test\",\n    \"year\": 2100,\n    \"rating\": 4,\n    \"platform\": \"netflix\",\n    \"duration\": 10000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/films",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"films"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": ""
+		}
+	]
+}
