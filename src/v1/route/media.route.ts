@@ -4,7 +4,7 @@
 
 
 import { Router } from "express";
-import final from "../container.final";
+import final from "../v1/container.final";
 
 const router = Router();
 const mediaCtrl = final.get('MediaController');
