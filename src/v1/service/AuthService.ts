@@ -42,7 +42,7 @@ interface SessionDetails{
  * @requires LoggerFactory
  */
 class AuthService {
-    static readonly dependencies = ['IDataLayer', 'PasswordUtility', 'LoggerFactory'] as const;
+    static readonly inject = ['IDataLayer', 'PasswordUtility', 'LoggerFactory'] as const;
     private logger: Logger
     private sessions: Map<string, SessionDetails>;
     constructor(

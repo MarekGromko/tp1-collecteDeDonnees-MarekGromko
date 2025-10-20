@@ -24,7 +24,7 @@ import { wrapErr } from "../utility/ResponseWrapper";
  * )
  */
 class AuthMiddleware {
-    static readonly dependencies = ['AuthService', 'LoggerFactory'] as const;
+    static readonly inject = ['AuthService', 'LoggerFactory'] as const;
     private logger: Logger
     constructor(
         private service: AuthService,

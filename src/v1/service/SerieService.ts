@@ -9,7 +9,7 @@ const serieMapper = (data: any)=>data ? Serie.from(data) : null
 const serieWhere  = (serieId: string): WhereFn<UnknownMedia> => (row: UnknownMedia) => row.mediaType === 'serie' && row.id == serieId;
 
 class SerieService {
-    static readonly dependencies = ['IDataLayer'] as const;
+    static readonly inject = ['IDataLayer'] as const;
     constructor(
         private db: IDataLayer,
     ) {}

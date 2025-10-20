@@ -12,7 +12,7 @@ import { LoggerFactory, Logger } from "../utility/LoggerFactory";
  * @requires LoggerFactory
  */
 class FilmValidationMiddleware {
-    static readonly dependencies = ['FieldValidation', 'LoggerFactory'] as const;
+    static readonly inject = ['FieldValidation', 'LoggerFactory'] as const;
     private logger: Logger;
     constructor(
         private validator: FieldValidation,

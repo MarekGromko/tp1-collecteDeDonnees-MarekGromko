@@ -7,7 +7,7 @@ import { wrapOk } from "../utility/ResponseWrapper";
  * @requires MediaService
  */
 class MediaController {
-    static readonly dependencies = ['MediaService'] as const;
+    static readonly inject = ['MediaService'] as const;
     constructor(
         private service: MediaService
     ){

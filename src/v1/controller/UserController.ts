@@ -8,7 +8,7 @@ import { wrapErr, wrapOk } from "../utility/ResponseWrapper";
  * @requires LoggerFactory
  */
 class UserController{
-    static readonly dependencies = ['UserService'] as const;
+    static readonly inject = ['UserService'] as const;
     constructor(
         private service: UserService
     ){

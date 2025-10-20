@@ -7,7 +7,7 @@ import { IFilm } from "../core/IMedia";
  * @requires IDataLayer
  */
 class FilmService {
-    static readonly dependencies = ['IDataLayer'] as const;
+    static readonly inject = ['IDataLayer'] as const;
     constructor(
         private db: IDataLayer
     ) {}

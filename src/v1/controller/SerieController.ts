@@ -9,7 +9,7 @@ import { LoggerFactory, Logger } from "../utility/LoggerFactory.ts";
  * @requires LoggerFactory
  */
 class SerieController {
-    static readonly dependencies = ['SerieService', 'LoggerFactory'] as const;
+    static readonly inject = ['SerieService', 'LoggerFactory'] as const;
     private logger: Logger;
     constructor(
         private service: SerieService,

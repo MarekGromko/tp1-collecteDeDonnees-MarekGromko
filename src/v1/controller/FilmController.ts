@@ -7,7 +7,7 @@ import { wrapOk } from "../utility/ResponseWrapper";
  * @requires FilmService
  */
 class FilmController {
-    static readonly dependencies = ['FilmService'] as const;
+    static readonly inject = ['FilmService'] as const;
     constructor(
         private service: FilmService
     ){

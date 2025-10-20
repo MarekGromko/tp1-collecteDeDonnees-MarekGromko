@@ -3,12 +3,12 @@
  */
 
 import { Router } from "express";
-import final from "../v1/container.final";
+import final from "../container.final";
 
 const router = Router();
-const filmCtrl = final.get('FilmController');
-const filmValidationMdwr = final.get('FilmValidationMiddleware');
-const logger = final.get('LoggerFactory').middleware('FilmRouter');
+const filmCtrl = final.resolve('FilmController');
+const filmValidationMdwr = final.resolve('FilmValidationMiddleware');
+const logger = final.resolve('LoggerFactory').middleware('FilmRouter');
 
 router.post('/films', 
     filmValidationMdwr.validateBody, 

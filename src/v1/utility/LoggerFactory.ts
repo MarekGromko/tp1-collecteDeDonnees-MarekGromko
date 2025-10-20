@@ -17,6 +17,7 @@ class LoggerFactory{
             format.printf(info=>{
                 return (
                     `[${info.timestamp}] ` + 
+                    `[v${info.version}] ` + 
                     `[${info.service}] `+
                     `${info.level.toUpperCase()}: `+
                     `${info.message}`
@@ -31,7 +32,7 @@ class LoggerFactory{
         );
         this.rootLogger = winston.createLogger({
             level: 'debug',
-            defaultMeta: { service: 'root' },
+            defaultMeta: { service: 'root', version: '1' },
             transports: [
                 new transports.Console({format: consoleFormat}),
                 new transports.File({

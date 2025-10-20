@@ -3,11 +3,11 @@
  */
 
 import { Router } from "express";
-import final from "../v1/container.final";
+import final from "../container.final";
 
 const router = Router();
-const authCtrl = final.get('AuthController');
-const logger = final.get('LoggerFactory').middleware('AuthRouter');
+const authCtrl = final.resolve('AuthController');
+const logger = final.resolve('LoggerFactory').middleware('AuthRouter');
 
 router.post('/login', logger, authCtrl.postLogin);
 router.post('/register', logger, authCtrl.postRegister);

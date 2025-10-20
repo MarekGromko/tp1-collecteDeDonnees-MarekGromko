@@ -4,12 +4,12 @@
 
 
 import { Router } from "express";
-import final from "../v1/container.final";
+import final from "../container.final";
 
 const router = Router();
-const serieCtrl           = final.get('SerieController');
-const serieValidationMdwr = final.get('SerieValidationMiddleware');
-const logger = final.get('LoggerFactory').middleware('SerieRouter');
+const serieCtrl           = final.resolve('SerieController');
+const serieValidationMdwr = final.resolve('SerieValidationMiddleware');
+const logger = final.resolve('LoggerFactory').middleware('SerieRouter');
 
 router.get('/series/:serieId/episodes', logger, serieCtrl.getAllEpisodesFromSerie);
 router.post('/series',

@@ -10,7 +10,7 @@ import { mediaMapper } from "./MediaService";
  * @requires IDataLayer
  */
 class UserService {
-    static readonly dependencies = ['IDataLayer'] as const;
+    static readonly inject = ['IDataLayer'] as const;
     constructor(
         private db: IDataLayer
     ){};

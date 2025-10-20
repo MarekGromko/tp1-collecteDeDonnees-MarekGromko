@@ -3,9 +3,9 @@ import fs from "node:fs";
 import env from "../utility/EnvStore.ts"
 
 // load env variables
-const DB_PATH      = env.requiredExistingFilename('DB_FILENAME');
+const DB_PATH      = env.requiredStr('DB_FILENAME');
 const DB_INIT_PATH = env.requiredStr('DB_INIT_FILENAME');
-const DB_LOAD_INIT = env.requiredStr('DB_LOAD_FILENAME', 'never');
+const DB_LOAD_INIT = env.requiredStr('DB_LOAD_INIT', 'never');
 
 /**
  * JSON replace
@@ -38,8 +38,9 @@ class DataLayerImpl implements IDataLayer{
     // the in-memory database
     private inMemDB?: Database;
     constructor() {
-        if(DB_LOAD_INIT === 'always' && DB_INIT_PATH)
+        if(DB_LOAD_INIT === 'always' && DB_INIT_PATH) {
             fs.copyFileSync(DB_INIT_PATH, DB_PATH);
+        }
     }
     private safeRange(opts: any) {
         let limit = Infinity;

@@ -38,7 +38,7 @@ interface MediaSearchOptions {
  * @requires IDataLayer
  */
 class MediaService{
-    static readonly dependencies = ['IDataLayer'] as const;
+    static readonly inject = ['IDataLayer'] as const;
     constructor(
         private db: IDataLayer
     ){}
