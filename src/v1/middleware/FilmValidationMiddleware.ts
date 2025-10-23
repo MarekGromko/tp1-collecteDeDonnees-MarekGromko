@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { FieldValidation } from "../utility/FieldValidation";
 import { IFilm } from "../core/IMedia";
 import { wrapErr } from "../utility/ResponseWrapper";
-import { LoggerFactory, Logger } from "../utility/LoggerFactory";
+import { LoggerFactory, Logger } from "../../common/LoggerFactory";
 
 /**
  * Validate the request body
@@ -25,7 +25,7 @@ class FilmValidationMiddleware {
      * Film request.body validation middleware
      */
     public validateBody(req: Request, res: Response, next: NextFunction) {
-        const body = req.body as IFilm;
+        const body = req.body as any;
         const {validator, logger} = this;
         // make it easier to set the response & call the error
         const makeError = (field: string)=>{

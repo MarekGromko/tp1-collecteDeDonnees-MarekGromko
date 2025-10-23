@@ -7,11 +7,11 @@
 import { IDataLayer } from "../core/IDataLayer";
 import { IUser } from "../core/IUser";
 import { ServiceResult } from "../core/common";
-import { LoggerFactory, Logger } from "../utility/LoggerFactory";
+import { LoggerFactory, Logger } from "../../common/LoggerFactory";
 import { PasswordUtility } from "../utility/PasswordUtility";
 import crypto from "node:crypto";
 import User from "../model/User";
-import env from "../utility/EnvStore";
+import env from "@common/EnvStore";
 
 // time before session are deleted
 const SESSION_TIMEOUT_MS    = env.requiredInt('SESSION_TIMEOUT_MS') as number;

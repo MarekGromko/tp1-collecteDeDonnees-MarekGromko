@@ -61,7 +61,7 @@ class SerieService {
         })[0];
         if(!serie || serie.seasons.length == 0)
             return db.abortDb(), 'SerieNonexistent';
-        serie.seasons.at(-1).episodes.push(episode);
+        serie.seasons.at(-1)?.episodes.push(episode);
         db.update<ISerie>('media', {
             where: serieWhere(serieId),
             set: ()=>serie

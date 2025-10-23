@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { FieldValidation } from "../utility/FieldValidation";
 import { ISerie } from "../core/IMedia";
 import { wrapErr } from "../utility/ResponseWrapper";
-import { LoggerFactory, Logger } from "../utility/LoggerFactory";
+import { LoggerFactory, Logger } from "../../common/LoggerFactory";
 
 /**
  * Validate the request body
@@ -26,7 +26,7 @@ class SerieValidationMiddleware {
      * Film request.body validation middleware
      */
     public validateBody(req: Request, res: Response, next: NextFunction) {
-        const body = req.body as ISerie;
+        const body = req.body as any;
         const {validator, logger} = this;
         const makeError = (field: string)=>{
             logger.error(`body is ill-formed on field '${field}'`);

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { IUser } from "../core/IUser";
 import { AuthService } from "../service/AuthService";
-import { LoggerFactory, Logger } from "../utility/LoggerFactory";
+import { LoggerFactory, Logger } from "../../common/LoggerFactory";
 import { wrapErr } from "../utility/ResponseWrapper";
 
 /**

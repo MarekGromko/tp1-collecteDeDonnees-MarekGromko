@@ -11,7 +11,6 @@ const mediaMapper = (data: UnknownMedia): UnknownMedia => {
     switch(data.mediaType) {
         case 'film': return Film.from(data);
         case 'serie': return Serie.from(data);
-        default: return null;
     }
 }
 

@@ -5,7 +5,7 @@ import { createInjector } from 'typed-inject';
 import { FieldValidation } from "./utility/FieldValidation";
 import { DataLayerImpl } from "./data/DataLayerImpl";
 import { PasswordUtility } from "./utility/PasswordUtility";
-import loggerFactory from "./utility/LoggerFactory";
+import loggerFactory from "../common/LoggerFactory";
 
 export const baseContainer = createInjector()
     .provideValue('FieldValidation', new FieldValidation)

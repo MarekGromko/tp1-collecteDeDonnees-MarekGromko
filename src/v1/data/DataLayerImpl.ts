@@ -1,6 +1,6 @@
 import type { IDataLayer, RowMapper, ValuesFn, WhereFn, Table, Database, CommonOpts, SetFn } from "../core/IDataLayer.ts";
 import fs from "node:fs";
-import env from "../utility/EnvStore.ts"
+import env from "@common/EnvStore.ts"
 
 // load env variables
 const DB_PATH      = env.requiredStr('DB_FILENAME');
@@ -91,6 +91,7 @@ class DataLayerImpl implements IDataLayer{
         let value   = opts.values(key);
 
         // check if the key is user-defined
+        if(!value) return;
         value.length === 2 ?
             [key, value] = value :
             value = value[0];
@@ -185,6 +186,7 @@ class DataLayerImpl implements IDataLayer{
             
             // if the row is relevant and outside the offset
             const mappedValue = opts.map(value as any, key);
+            if(!mappedValue === null) continue;
             result.push(mappedValue);
             affectedRow++;
         }
