@@ -1,4 +1,4 @@
-import AbstractMedia from "./AbstractMedia.ts";
+import AbstractMedia from "./AbstractMedia";
 
 /**
  * The status of a serie

@@ -1,5 +1,5 @@
-import type { ISeason, IEpisode } from "../core/IMedia.ts";
-import Episode from "./Episode.ts";
+import type { ISeason, IEpisode } from "../core/IMedia";
+import Episode from "./Episode";
 
 /**
  * Model Season

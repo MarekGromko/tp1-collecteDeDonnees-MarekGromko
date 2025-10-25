@@ -3,9 +3,9 @@
  */
 
 import fs from "node:fs";
-import loggerFactory from "./LoggerFactory";
+import { baseContainer } from "../container.base";
 
-const logger = loggerFactory.service('ENV');
+const logger = baseContainer.resolve("LoggerFactory").service('ENV');
 
 /** @inner */
 const callFallback = (fallback: any, key: string, ...args: any[])=>{

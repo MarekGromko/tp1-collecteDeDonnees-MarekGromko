@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import winston, {format, transports, Logger} from "winston";
 
-// TODO: find a way to use EnvStore for these...
 const USER_LOG_PATH  = process.env.USER_LOG_FILENAME
 const ERROR_LOG_PATH = process.env.ERROR_LOG_FILENAME
 
@@ -10,7 +9,7 @@ const ERROR_LOG_PATH = process.env.ERROR_LOG_FILENAME
  */
 class LoggerFactory{
     private rootLogger: winston.Logger;
-    constructor() {
+    constructor(version: string) {
         // format for the console
         const consoleFormat = format.combine(
             format.timestamp({format: 'YYYY-MM-DD HH:mm:ss'}),
@@ -32,7 +31,7 @@ class LoggerFactory{
         );
         this.rootLogger = winston.createLogger({
             level: 'debug',
-            defaultMeta: { service: 'root', version: '1' },
+            defaultMeta: { service: 'root', version: version },
             transports: [
                 new transports.Console({format: consoleFormat}),
                 new transports.File({
@@ -74,9 +73,7 @@ class LoggerFactory{
     }
 }
 
-const loggerFactory = new LoggerFactory
-
-export default loggerFactory;
+export default LoggerFactory;
 export type {
     LoggerFactory,
     Logger

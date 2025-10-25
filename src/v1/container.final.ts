@@ -15,8 +15,10 @@ import { AuthService } from "./service/AuthService";
 import { AuthMiddleware } from "./middleware/AuthMiddleware";
 import { AuthController } from "./controller/AuthController";
 import { baseContainer } from "./container.base";
+import { DataLayerImpl } from "./data/DataLayerImpl";
 
 const final = baseContainer.createChildInjector()
+    .provideClass("IDataLayer", DataLayerImpl)
     .provideClass('AuthService', AuthService)
     .provideClass('MediaService', MediaService)
     .provideClass('FilmService', FilmService)

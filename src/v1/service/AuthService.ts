@@ -11,7 +11,7 @@ import { LoggerFactory, Logger } from "../../common/LoggerFactory";
 import { PasswordUtility } from "../utility/PasswordUtility";
 import crypto from "node:crypto";
 import User from "../model/User";
-import env from "@common/EnvStore";
+import env from "../utility/EnvStore";
 
 // time before session are deleted
 const SESSION_TIMEOUT_MS    = env.requiredInt('SESSION_TIMEOUT_MS') as number;

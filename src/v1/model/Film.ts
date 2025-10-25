@@ -1,5 +1,5 @@
-import AbstractMedia from "../core/AbstractMedia.ts";
-import type { IFilm } from "../core/IMedia.ts";
+import AbstractMedia from "../core/AbstractMedia";
+import type { IFilm } from "../core/IMedia";
 
 /**
  * Model Film

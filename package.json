@@ -1,32 +1,39 @@
 {
-  "name": "tp1-collecte-de-donnees",
-  "version": "1.0.0",
-  "description": "",
-  "license": "ISC",
-  "author": "",
-  "type": "commonjs",
-  "main": "index.js",
-  "scripts": {
-    "build": "node esbuild.config.js",
-    "dev": "nodemon --watch src --exec \"node esbuild.config.js && node dist/app.js\""
-  },
-  "devDependencies": {
-    "@types/chai": "^5.2.2",
-    "@types/cookie-parser": "^1.4.9",
-    "@types/mocha": "^10.0.10",
-    "chai": "^6.0.1",
-    "esbuild": "^0.25.10",
-    "mocha": "^11.7.2",
-    "nodemon": "^3.1.10",
-    "typescript": "^5.9.2"
-  },
-  "dependencies": {
-    "@types/express": "^5.0.3",
-    "@types/node": "^24.5.2",
-    "cookie-parser": "^1.4.7",
-    "dotenv": "^17.2.3",
-    "express": "^5.1.0",
-    "typed-inject": "^5.0.0",
-    "winston": "^3.17.0"
-  }
+    "name": "tp1-collecte-de-donnees",
+    "version": "1.0.0",
+    "description": "",
+    "license": "ISC",
+    "author": "",
+    "type": "commonjs",
+    "main": "index.js",
+    "scripts": {
+        "dev": "tsx --watch ./src/app.ts",
+        "test": "mocha",
+        "test:coverage": "nyc npx mocha"
+    },
+    "devDependencies": {
+        "@istanbuljs/nyc-config-typescript": "^1.0.2",
+        "@types/chai": "^5.2.2",
+        "@types/cookie-parser": "^1.4.9",
+        "@types/express": "^5.0.3",
+        "@types/mocha": "^10.0.10",
+        "@types/node": "^24.5.2",
+        "@types/sanitize-html": "^2.16.0",
+        "chai": "^6.0.1",
+        "mocha": "^11.7.2",
+        "nyc": "^17.1.0",
+        "typescript": "^5.9.2"
+    },
+    "dependencies": {
+        "ajv": "^8.17.1",
+        "ajv-keywords": "^5.1.0",
+        "cookie-parser": "^1.4.7",
+        "dotenv": "^17.2.3",
+        "express": "^5.1.0",
+        "mongoose": "^8.19.2",
+        "sanitize-html": "^2.17.0",
+        "tsx": "^4.20.6",
+        "typed-inject": "^5.0.0",
+        "winston": "^3.17.0"
+    }
 }

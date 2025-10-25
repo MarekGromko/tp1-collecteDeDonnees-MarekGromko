@@ -1,7 +1,7 @@
-import type { IDataLayer } from "../core/IDataLayer.ts";
-import type { UnknownMedia } from "../core/IMedia.ts";
-import Film from "../model/Film.ts";
-import Serie from "../model/Serie.ts";
+import type { IDataLayer } from "../core/IDataLayer";
+import type { UnknownMedia } from "../core/IMedia";
+import Film from "../model/Film";
+import Serie from "../model/Serie";
 
 /**
  * Map a UnknownMedia to Film or Serie

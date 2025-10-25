@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
-import { SerieService } from "../service/SerieService.ts";
-import { wrapErr, wrapOk } from "../utility/ResponseWrapper.ts";
-import { LoggerFactory, Logger } from "../../common/LoggerFactory.ts";
+import { SerieService } from "../service/SerieService";
+import { wrapErr, wrapOk } from "../utility/ResponseWrapper";
+import { LoggerFactory, Logger } from "../../common/LoggerFactory";
 
 /**
  * Controller for all serie related endpoint

@@ -1,6 +1,6 @@
-import type { ISerie, ISeason, SerieStatus } from "../core/IMedia.ts";
-import AbstractMedia from "../core/AbstractMedia.ts";
-import Season from "./Season.ts";
+import type { ISerie, ISeason, SerieStatus } from "../core/IMedia";
+import AbstractMedia from "../core/AbstractMedia";
+import Season from "./Season";
 
 /**
  * Model Serie
