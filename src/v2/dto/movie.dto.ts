@@ -1,14 +1,6 @@
 import { Movie } from "../model/movie.model"
 import ajv, { JSONSchemaType } from "../setup/ajv.setup"
 
-export interface SerieDetailResponse {
-    id: string,
-    title: string,
-    genres: string[],
-    status: 'ongoing'|'ended'
-}
-
-
 export interface MovieDetailResponse {
     id: string,
     title: string,
@@ -27,8 +19,9 @@ export namespace MovieDetailResponse {
         relasedAt:      movie.releasedAt?.toISOString() || null
     });
 }
+
 export interface MovieSearchReponse {
-    results: MovieDetailResponse[],
+    results:    MovieDetailResponse[],
     total:      number 
     page:       number,
     pageSize:   number
@@ -59,9 +52,7 @@ export namespace PostMovieRequest {
     export const validation = ajv.compile(schema);
 }
 
-export interface PatchMovieRequest extends Partial<PostMovieRequest> {
-
-}
+export interface PatchMovieRequest extends Partial<PostMovieRequest> {}
 export namespace PatchMovieRequest {
     export const schema: JSONSchemaType<PatchMovieRequest> = {
         type: "object",

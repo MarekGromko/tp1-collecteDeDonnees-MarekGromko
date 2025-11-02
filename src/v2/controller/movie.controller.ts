@@ -32,7 +32,7 @@ export class MovieController {
 
         const movies = await this.movieService.searchMovie({
             title:      Assert.string(title),
-            genre:      Assert.string(genre),
+            genres:     Assert.string(genre),
             minYear:    Assert.condition(Assert.int(minYear), x=>x>0),
             maxDur:     Assert.condition(Assert.int(maxDur), x=>x>0),
             page:       truePage,

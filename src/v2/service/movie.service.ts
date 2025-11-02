@@ -3,7 +3,7 @@ import { Movie } from "../model/movie.model";
 
 export interface SearchMovieOptions {
     title?: string,
-    genre?: string,
+    genres?: string,
     minYear?: number,
     maxDur?: number,
     page:   number,
@@ -16,8 +16,8 @@ export class MovieService {
         let filter: FilterQuery<Movie.Model> = {}
         if(opts.title)
             filter.title = { $regex: opts.title, $options: 'i'}
-        if(opts.genre)
-            filter.genres = { $in: [opts.genre.toLowerCase()] }
+        if(opts.genres)
+            filter.genres = { $in: [opts.genres.toLowerCase()] }
         if(opts.minYear)
             filter.releaseAt = { $gte: new Date(opts.minYear, 0, 0, 0, 0, 0, 0) }
         if(opts.maxDur)

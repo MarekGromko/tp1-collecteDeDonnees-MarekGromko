@@ -20,6 +20,9 @@ export namespace Assert {
                 return
         return src;
     };
+    export const orelse = <T, E>(src: T, orelse: E): Exclude<T, undefined> | E => (
+        src === undefined ? orelse : src as any
+    );
     export const int: AssertInt = (src: any, orelse?: any): number | any=>{
         if(typeof src === 'string') src = parseInt(src);
         if(typeof src !== 'number') return orelse;
@@ -29,7 +32,7 @@ export namespace Assert {
     export const string: AssertString = (src: any, orelse?: any | undefined): string | any => (
         typeof src === 'string' ? src : orelse
     );
-    export const orelse = <T, E>(src: T, orelse: E): Exclude<T, undefined> | E => (
-        src === undefined ? orelse : src as any
-    );
+    export const enums =  <const T extends string[]>(src: any, enums: T): T[number] | undefined => (
+        typeof src === 'string' && enums.includes(src) ? src : undefined 
+    )
 }

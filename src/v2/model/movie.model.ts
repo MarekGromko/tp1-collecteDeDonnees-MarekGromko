@@ -18,7 +18,7 @@ export namespace Movie{
         },
         "synopsis":     { type: String, required: false },
         "releasedAt":    { type: Date,   required: false }
-    });
+    }, { timestamps: true });
     schema.index({ title: "hashed" }); 
     schema.index({ genres: "text" });
     export const Model  = mongoose.model('Movie', schema);

@@ -18,7 +18,9 @@ export namespace Serie {
             required: true, 
             enum: { values: ['ongoing', 'ended'] }
         }
-    })
+    }, { timestamps: true })
+    schema.index({ title: "hashed" })
+    schema.index({ genres: "text" })
     export const Model  = mongoose.model('Serie', schema);
     export type Model   = HydratedDocument<Serie>
 }
