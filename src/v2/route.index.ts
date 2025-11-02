@@ -6,5 +6,6 @@ const index = Router();
 
 index.use('/auth', require('./route/auth.route.ts').default);
 index.use('/user', require('./route/user.route.ts').default);
+index.use('/movie', require('./route/movie.route.ts').default);
 
 export default index;

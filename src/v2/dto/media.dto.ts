@@ -10,5 +10,11 @@ export interface MovieDetailResponse {
     genres: string[],
     durationMin: number,
     synopsis: string | null,
-    releaseDate: string | null
+    relasedAt: string | null
+}
+export interface MovieSearchReponse {
+    results: MovieDetailResponse[],
+    total:      number 
+    page:       number,
+    pageSize:   number
 }

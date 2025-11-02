@@ -5,7 +5,7 @@ export interface Movie {
     genres: string[],
     durationMin: number,
     synopsis?:      string,
-    releaseDate?:   Date,
+    releasedAt?:   Date,
 }
 
 export namespace Movie{
@@ -17,7 +17,7 @@ export namespace Movie{
             required: true
         },
         "synopsis":     { type: String, required: false },
-        "releaseDate":  { type: Date,   required: false }
+        "releasedAt":    { type: Date,   required: false }
     });
     export const Model  = mongoose.model('Movie', schema);
     export type Model   = mongoose.HydratedDocument<Movie>;

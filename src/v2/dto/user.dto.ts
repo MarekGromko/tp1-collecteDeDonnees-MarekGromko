@@ -48,8 +48,8 @@ export interface UserDetailResponse {
     username: string,
     email: string,
     role: 'admin' | 'user'
-    favorites: (
-        ({ kind: 'Serie' } & SerieDetailResponse) | 
-        ({ kind: 'Movie' } & MovieDetailResponse)
-    )[]
+    favorites: {
+        kind: 'Movie' | 'Serie',
+        id: string
+    }[]
 };

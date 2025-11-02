@@ -15,3 +15,35 @@ User:
       lastAttempt: 3000-10-10
       attempts: 9999
       digest: $2b$04$1ehBJi4F201LGQjJS.QqO.GXBdI0EBsvpnU2n2wxu55hOukwWduuK # password: P@ssword123
+Movie:
+  - title: "Eternal Horizon"
+    genres:
+      - "sci-fi"
+      - "adventure"
+    durationMin: 142
+    synopsis: "A crew of astronauts discovers a mysterious planet that challenges their perception of time and reality."
+    releasedAt: 2023-11-15
+
+  - title: "Whispering Shadows"
+    genres:
+      - "horror"
+      - "mystery"
+    durationMin: 97
+    synopsis: "A small town is haunted by a series of unexplained disappearances that seem connected to an abandoned mansion."
+    releasedAt: 2021-10-31
+
+  - title: "The Last Melody"
+    genres:
+      - "drama"
+      - "music"
+    durationMin: 125
+    synopsis: "A talented pianist struggles to overcome personal tragedy while preparing for the concert of a lifetime."
+    releasedAt: 2022-05-20
+
+  - title: "Neon Streets"
+    genres:
+      - "action"
+      - "thriller"
+    durationMin: 110
+    synopsis: "In a futuristic city, a rogue detective must stop a criminal syndicate controlling the underground racing world."
+    releasedAt: 2024-03-10
