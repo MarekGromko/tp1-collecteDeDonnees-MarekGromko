@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import { UserService } from "../service/UserService";
-import { wrapErr, wrapOk } from "../utility/ResponseWrapper";
+import { wrapErr, wrapOk } from "../../common/ResponseWrapper";
 
 /**
  * Controller for all user related endpoint

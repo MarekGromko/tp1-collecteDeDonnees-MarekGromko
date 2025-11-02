@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import { MediaService } from "../service/MediaService";
-import { wrapOk } from "../utility/ResponseWrapper";
+import { wrapOk } from "../../common/ResponseWrapper";
 
 /**
  * Controller for all medias related endpoint

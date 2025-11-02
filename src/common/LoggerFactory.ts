@@ -1,8 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import winston, {format, transports, Logger} from "winston";
+import config from "config";
 
-const USER_LOG_PATH  = process.env.USER_LOG_FILENAME
-const ERROR_LOG_PATH = process.env.ERROR_LOG_FILENAME
+const CONSOLE_CONFIG = config.get<{level: string}>("log.console");
+const USER_CONFIG  = config.get<{level: string, path: string}>("log.user");
+const ERROR_CONFIG = config.get<{level: string, path: string}>("log.error");
 
 /**
  * Factory that create middleware logger or service logger
@@ -33,15 +35,15 @@ class LoggerFactory{
             level: 'debug',
             defaultMeta: { service: 'root', version: version },
             transports: [
-                new transports.Console({format: consoleFormat}),
+                new transports.Console({format: consoleFormat, level: CONSOLE_CONFIG.level}),
                 new transports.File({
-                    level: 'info',
-                    filename: USER_LOG_PATH,
+                    level:    USER_CONFIG.level,
+                    filename: USER_CONFIG.path,
                     format: fileFormat
                 }),
                 new transports.File({
-                    level: 'error',
-                    filename: ERROR_LOG_PATH,
+                    level:    ERROR_CONFIG.level,
+                    filename: ERROR_CONFIG.path,
                     format: fileFormat
                 })
             ]

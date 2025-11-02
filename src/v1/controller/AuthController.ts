@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { AuthService } from "../service/AuthService";
 import { LoggerFactory, Logger } from "@common/LoggerFactory";
-import { wrapErr, wrapOk } from "../utility/ResponseWrapper";
+import { wrapErr, wrapOk } from "../../common/ResponseWrapper";
 
 /**
  * Controller for all authentification related endpoint

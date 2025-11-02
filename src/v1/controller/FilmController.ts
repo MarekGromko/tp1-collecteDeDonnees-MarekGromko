@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import { FilmService } from "../service/FilmService";
-import { wrapOk } from "../utility/ResponseWrapper";
+import { wrapOk } from "../../common/ResponseWrapper";
 
 /**
  * Controller for all films related endpoint

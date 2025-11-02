@@ -1,4 +1,4 @@
-import ajv, { JSONSchemaType } from "../config/ajv.config";
+import ajv, { JSONSchemaType } from "../setup/ajv.setup";
 
 export interface RegisterRequest {
     email: string,

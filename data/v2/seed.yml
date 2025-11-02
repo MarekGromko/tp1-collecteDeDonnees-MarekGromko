@@ -1,0 +1,17 @@
+User:
+  - _id: f10000000000000000000000
+    username: test-user
+    email: test@email.com
+    role: admin
+    password:
+      lastAttempt: 2010-10-10
+      attempts: 0
+      digest: $2b$04$1ehBJi4F201LGQjJS.QqO.GXBdI0EBsvpnU2n2wxu55hOukwWduuK # password: P@ssword123
+  - _id: f20000000000000000000000
+    username: lockout-user
+    email: lockout@user.com
+    role: user
+    password:
+      lastAttempt: 3000-10-10
+      attempts: 9999
+      digest: $2b$04$1ehBJi4F201LGQjJS.QqO.GXBdI0EBsvpnU2n2wxu55hOukwWduuK # password: P@ssword123

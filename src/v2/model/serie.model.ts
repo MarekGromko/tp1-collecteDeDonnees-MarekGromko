@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { HydratedDocument, Schema } from "mongoose";
 
 export interface Serie {
     title: string,
@@ -20,5 +20,5 @@ export namespace Serie {
         }
     })
     export const Model  = mongoose.model('Serie', schema);
-    export type Model = typeof Model;
+    export type Model   = HydratedDocument<Serie>
 }

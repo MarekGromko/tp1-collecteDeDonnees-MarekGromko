@@ -20,5 +20,5 @@ export namespace Movie{
         "releaseDate":  { type: Date,   required: false }
     });
     export const Model  = mongoose.model('Movie', schema);
-    export type Model = typeof Model;
+    export type Model   = mongoose.HydratedDocument<Movie>;
 }

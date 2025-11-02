@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { FieldValidation } from "../utility/FieldValidation";
 import { ISerie } from "../core/IMedia";
-import { wrapErr } from "../utility/ResponseWrapper";
+import { wrapErr } from "../../common/ResponseWrapper";
 import { LoggerFactory, Logger } from "../../common/LoggerFactory";
 
 /**

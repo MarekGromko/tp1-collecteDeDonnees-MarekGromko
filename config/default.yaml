@@ -1,0 +1,35 @@
+v1:
+  auth:
+    session:
+      timeout-ms: 3600000
+    pwd:
+      attempts-timeout-ms: 300000
+      max-attempts: 5
+  db:
+    filename: ./data/v1/db.json
+    init-filename: ./data/v1/db.init.json
+    init-load: always
+
+log:
+  console:
+    level: debug
+  error:
+    level: error
+    path: ./logs/error.log
+  user:
+    level: info
+    path: ./logs/user.log
+auth:
+  password:
+    salt-rounds: 2
+    lockout-duration: t5m
+    max-attempts: 5
+  jwt:
+    secret: my-jwt-secret
+    expires-in: t6h
+db:
+  uri: mongodb://127.0.0.1:27017/tp2-cdd
+  init-load: always
+  seed-filepath: './data/v2/seed.yml'
+server:
+  port: 8080

@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import { SerieService } from "../service/SerieService";
-import { wrapErr, wrapOk } from "../utility/ResponseWrapper";
+import { wrapErr, wrapOk } from "../../common/ResponseWrapper";
 import { LoggerFactory, Logger } from "../../common/LoggerFactory";
 
 /**

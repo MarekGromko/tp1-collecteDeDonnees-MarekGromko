@@ -1,10 +1,12 @@
 {
     "compilerOptions": {
         "baseUrl": ".",
-        "rootDir": ".",
+        "rootDir": "./",
 
         "paths": {
-            "@common/*": ["src/common/*"]
+            "@common/*": ["src/common/*"],
+            "@src/*": ["./src/*"],
+            "@test/*": ["./test/*"]
         },
 
         "strict": true,        
@@ -15,7 +17,13 @@
         "forceConsistentCasingInFileNames": true,
         "skipLibCheck": true,
         "noEmit": true,
-        "strictNullChecks": true
+        "strictNullChecks": true,
+
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
     },
-    "include": ["src/**/*"]
+    "include": [
+        "src/**/*",
+        "test/**/*"
+    ]
 }

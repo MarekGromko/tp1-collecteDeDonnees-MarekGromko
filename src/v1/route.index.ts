@@ -1,6 +1,3 @@
-import dotenv from "dotenv"
-dotenv.config({quiet: true});
-
 import {Router} from "express"
 import cookieParser from 'cookie-parser';
 

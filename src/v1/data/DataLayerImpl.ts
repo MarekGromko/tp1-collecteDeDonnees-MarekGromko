@@ -1,11 +1,10 @@
 import type { IDataLayer, RowMapper, ValuesFn, WhereFn, Table, Database, CommonOpts, SetFn } from "../core/IDataLayer.ts";
 import fs from "node:fs";
-import env from "../utility/EnvStore.js"
-console.log(env);
+import config from "config"
 // load env variables
-const DB_PATH      = env.requiredStr('DB_FILENAME');
-const DB_INIT_PATH = env.requiredStr('DB_INIT_FILENAME');
-const DB_LOAD_INIT = env.requiredStr('DB_LOAD_INIT', 'never');
+const DB_PATH      = config.get<string>("v1.db.filename")
+const DB_INIT_PATH = config.get<string>("v1.db.init-filename")
+const DB_LOAD_INIT = config.get<string>("v1.db.init-load")
 
 /**
  * JSON replace

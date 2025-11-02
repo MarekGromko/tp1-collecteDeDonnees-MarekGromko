@@ -1,4 +1,4 @@
-import mongoose, { Schema, Types } from "mongoose"
+import mongoose, { HydratedDocument, Schema, Types } from "mongoose"
 import { CommonValidaton } from "../validation/common.validation"
 import { Serie } from "src/v2/model/serie.model"
 import { Movie } from "src/v2/model/movie.model"
@@ -6,7 +6,11 @@ import { Movie } from "src/v2/model/movie.model"
 export interface User {
     email: string,
     username: string,
-    password: string,
+    password: {
+        lastAttempt: Date
+        attempts: number
+        digest: string
+    },
     role: 'admin' | 'user'
     favorites: (
         { kind: 'Serie', itemRef: Serie.Model | Types.ObjectId } |
@@ -18,7 +22,11 @@ export namespace User {
     export const schema = new Schema<User>({
         "email":    { type: String, required: true, validators: [CommonValidaton.validateEmail] },
         "username": { type: String, required: true, validators: [CommonValidaton.validateUsername] },
-        "password": { type: String, required: true },
+        "password": { 
+            "lastAttempt":  { type: Date,   required: true },
+            "attempts":     { type: Number, required: true, min: 0 },
+            "digest":       { type: String, required: true }
+        },
         "role": {
             type: String,
             required: true,
@@ -39,7 +47,9 @@ export namespace User {
             }],
             required: true
         }
-    })
-    export const Model = mongoose.model('User', schema);
-    export type Model = typeof Model;
+    });
+    schema.path("email").index({ unique: true });
+    schema.path("username").index({ unique: true });
+    export const Model   = mongoose.model('User', schema);
+    export type  Model = HydratedDocument<User>
 }

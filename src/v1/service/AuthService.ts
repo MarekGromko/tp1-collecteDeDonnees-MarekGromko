@@ -11,14 +11,14 @@ import { LoggerFactory, Logger } from "../../common/LoggerFactory";
 import { PasswordUtility } from "../utility/PasswordUtility";
 import crypto from "node:crypto";
 import User from "../model/User";
-import env from "../utility/EnvStore";
+import config from "config";
 
 // time before session are deleted
-const SESSION_TIMEOUT_MS    = env.requiredInt('SESSION_TIMEOUT_MS') as number;
+const SESSION_TIMEOUT_MS    = config.get<number>('v1.auth.session.timeout-ms');
 // maximum amount of wrong password attempts
-const PWD_MAX_ATTEMPTS      = env.requiredInt('PWD_MAX_ATTEMPTS') as number;
+const PWD_MAX_ATTEMPTS      = config.get<number>('v1.auth.pwd.max-attempts');
 // time to timeout the password attempts
-const PWD_TIMEOUT_MS        = env.requiredInt('PWD_TIMEOUT_MS') as number;
+const PWD_TIMEOUT_MS        = config.get<number>('v1.auth.pwd.attempts-timeout-ms');
 
 /**
  * Detail of a session

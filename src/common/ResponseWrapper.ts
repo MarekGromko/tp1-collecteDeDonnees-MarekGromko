@@ -39,8 +39,10 @@ export const wrapOk = (res: Response)=>{
         Ok: ()=>(res.status(200), wrapper),
         Created: ()=>(res.status(201), wrapper),
         NoContent: ()=>(void res.status(204).end()),
-        end: (data: any)=>{
-            res.send(data).end();
+        end: (data?: any)=>{
+            if(data !== undefined)
+                res.send(data);
+            res.end();
         }
     }
     return wrapper;
