@@ -9,8 +9,8 @@ interface AssertInt {
 }
 
 export namespace Assert {
-    export const map = <T, R>(src: T, map: (src: Exclude<T, undefined>) => (R)): R | T => (
-        src === undefined ? undefined : map(src as any)
+    export const map = <T, R>(src: T, map: (src: Exclude<T, undefined>) => (R)): R | Extract<T, undefined> => (
+        src === undefined ? undefined as any : map(src as any)
     );
     export const condition = <T>(src: T, ...checks: ((src: Exclude<T, undefined>) => boolean)[]): T | undefined => {
         if(src === undefined)

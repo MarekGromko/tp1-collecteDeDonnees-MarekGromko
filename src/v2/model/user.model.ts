@@ -48,8 +48,8 @@ export namespace User {
             required: true
         }
     });
-    schema.path("email").index({ unique: true });
-    schema.path("username").index({ unique: true });
+    schema.index({ email: "hashed" }, { unique: true });
+    schema.index({ username: "hashed" }, { unique: true })
     export const Model   = mongoose.model('User', schema);
     export type  Model = HydratedDocument<User>
 }

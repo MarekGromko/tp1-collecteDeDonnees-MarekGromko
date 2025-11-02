@@ -1,9 +1,13 @@
-import { Route } from "@common/decorator/controller.decorator";
+import { Middleware, Route } from "@common/decorator/controller.decorator";
 import { RequestHandler } from "express";
 import { MovieService } from "../service/movie.service";
 import { Assert } from "../utility/assert.utiliy";
-import { wrapOk } from "@common/ResponseWrapper";
-import { MovieSearchReponse } from "../dto/media.dto";
+import { wrapErr, wrapOk } from "@common/ResponseWrapper";
+import { MovieDetailResponse, MovieSearchReponse, PatchMovieRequest, PostMovieRequest } from "../dto/movie.dto";
+import { Movie } from "../model/movie.model";
+import { isValidObjectId } from "mongoose";
+import { PreAuthorizeMw } from "../middleware/security.middleware";
+import { ValidationMw } from "../middleware/validation.middleware";
 
 
 export class MovieController {
@@ -11,8 +15,9 @@ export class MovieController {
     constructor(
         private readonly movieService: MovieService
     ) {}
+
     @Route("GET", "/")
-    getMovies: RequestHandler =  async (req, res)=>{
+    getMovies: RequestHandler = async (req, res)=>{
         const {
             title,
             genre,
@@ -35,18 +40,80 @@ export class MovieController {
         });
 
         const response: MovieSearchReponse = {
-            results: movies.map(movie=>({
-                id:             movie._id.toHexString(),
-                title:          movie.title,
-                genres:         movie.genres,
-                durationMin:    movie.durationMin,
-                synopsis:       movie.synopsis || null,
-                relasedAt:      movie.releasedAt?.toISOString() || null
-            })),
+            results: movies.map(MovieDetailResponse.fromModel),
             total:      movies.length,
             page:       truePage,
             pageSize:   trueLimit
         }
         wrapOk(res).Ok().end(response);
+    }
+
+    @Route("GET", "/:id")
+    getMovieById: RequestHandler = async (req, res)=>{
+        const { id } = req.params;
+        if(!isValidObjectId(id))
+            return wrapErr(res).BadRequest().end("Invalid id");
+
+        const movie = await Movie.Model.findById(id).exec();
+        if(!movie)
+            return wrapErr(res).NotFound().end("Movie not found");
+
+        wrapOk(res).Ok().end(MovieDetailResponse.fromModel(movie));
+    }
+
+    @Middleware(ValidationMw(PostMovieRequest.validation))
+    @Middleware(PreAuthorizeMw(user=>user.role === 'admin'))
+    @Route("POST", "/")
+    addMovie: RequestHandler = async (req, res)=>{
+        const body = req.body as PostMovieRequest;
+        const movie = await Movie.Model.create({
+            title: body.title,
+            genres: body.genres,
+            durationMin: body.durationMin,
+            synopsis: body.synopsis,
+            releasedAt: Assert.map(body.releasedAt, t=>new Date(t))
+        });
+        wrapOk(res).Created().end(MovieDetailResponse.fromModel(movie));
+    }
+
+    @Middleware(ValidationMw(PatchMovieRequest.validation))
+    @Middleware(PreAuthorizeMw(user=>user.role === 'admin'))
+    @Route("PATCH", "/:id")
+    patchMovie: RequestHandler = async (req, res)=>{
+        const toPatch = req.body as PatchMovieRequest
+        const { id } = req.params;
+        if(!isValidObjectId(id))
+            return wrapErr(res).BadRequest().end('Invalid Id');
+        const movie = await Movie.Model.findById(id).exec();
+        if(!movie)
+            return wrapErr(res).NotFound().end('Movie not found');
+        
+        if(toPatch.title)
+            movie.set('title', toPatch.title);
+
+        if(toPatch.genres)
+            movie.set('genres', toPatch.genres);
+
+        if(toPatch.releasedAt)
+            movie.set('releasedAt', new Date(toPatch.releasedAt));
+
+        if(toPatch.synopsis)
+            movie.set('synopsis', toPatch.synopsis);
+
+        if(toPatch.durationMin)
+            movie.set('durationMin', toPatch.durationMin);
+
+        await movie.save();
+        wrapOk(res).NoContent();
+    }
+
+    @Middleware(PreAuthorizeMw(user=>user.role === 'admin'))
+    @Route("DELETE", "/:id")
+    deleteMovie: RequestHandler = async (req, res)=>{
+        const { id } = req.params;
+        if(!isValidObjectId(id))
+            return wrapErr(res).BadRequest().end('Invalid Id');
+        await Movie.Model.findByIdAndDelete(id).exec();
+        wrapOk(res).NoContent();
     }
 }

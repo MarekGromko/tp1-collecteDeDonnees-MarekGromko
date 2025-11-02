@@ -1,5 +1,5 @@
 import { JSONSchemaType } from "ajv"
-import { MovieDetailResponse, SerieDetailResponse } from "./media.dto"
+import { MovieDetailResponse, SerieDetailResponse } from "./movie.dto"
 import ajv from "../setup/ajv.setup";
 
 export interface PatchUserRequest{

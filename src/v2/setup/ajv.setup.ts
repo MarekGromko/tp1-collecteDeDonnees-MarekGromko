@@ -6,7 +6,8 @@ import { CommonValidaton } from "../validation/common.validation";
 const ajv = new Ajv({formats: {
     "password": CommonValidaton.validatePassword,
     "email":    CommonValidaton.validateEmail,
-    "username": CommonValidaton.validateUsername
+    "username": CommonValidaton.validateUsername,
+    "date":     (src: string)=>!isNaN(Date.parse(src))
 }});
 ajvKeywords(ajv, ["transform"]);
 
