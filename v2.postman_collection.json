@@ -1,0 +1,4073 @@
+{
+	"info": {
+		"_postman_id": "ad4b965e-c1a9-420f-b33c-b26b065d4f49",
+		"name": "v2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44225006"
+	},
+	"item": [
+		{
+			"name": "Authentification",
+			"item": [
+				{
+					"name": "/register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 201\", ()=>{",
+									"    pm.expect(pm.response.code).to.equal(201)",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"valid-username-{{$randomNoun}}\",\n    \"password\": \"V@lid-p@ssword-123\",\n    \"email\": \"valid.{{$randomNoun}}@email.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/register",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[201] happy path",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"valid-username-{{$randomNoun}}\",\n    \"password\": \"V@lid-p@ssword-123\",\n    \"email\": \"valid.{{$randomNoun}}@email.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/auth/register",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 06:26:41 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Content-Length",
+									"value": "0"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "[400] missing body",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"valid-username\",\n    \"password\": \"V@lid-p@ssword-123\"\n    //\"email\": \"valid@email.com\" missing email field\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/auth/register",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "30"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1e-gr4FiQA6Lbw+4zFrOgoYqXuvo4o\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 06:27:03 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"body is ill-formed\"\n}"
+						},
+						{
+							"name": "[400] invalid username",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"invalid-username-$$$\",\n    \"password\": \"V@lid-p@ssword-123\",\n    \"email\": \"valid@email.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/auth/register",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "30"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1e-gr4FiQA6Lbw+4zFrOgoYqXuvo4o\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 06:27:33 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"body is ill-formed\"\n}"
+						},
+						{
+							"name": "[400] invalid password",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"valid-username\",\n    \"password\": \"inv@lid-P@ssword\", // no number char\n    \"email\": \"valid@email.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/auth/register",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "30"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1e-gr4FiQA6Lbw+4zFrOgoYqXuvo4o\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 06:28:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"body is ill-formed\"\n}"
+						},
+						{
+							"name": "[409] username taken",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"test-user\",\n    \"password\": \"V@lid-p@ssword-123\",\n    \"email\": \"valid.{{$randomNoun}}@email.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/auth/register",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "50"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"32-8M5bQOKOA+64I2ik9aWv95w6VlI\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 06:30:34 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"User already exists\",\n    \"field\": \"username\"\n}"
+						},
+						{
+							"name": "[409] email taken",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"valid-username-{{$randomNoun}}\",\n    \"password\": \"V@lid-p@ssword-123\",\n    \"email\": \"test@email.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/auth/register",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "47"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2f-cmyQQmmRsvCcL0u66hOVALiszGY\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 06:31:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"User already exists\",\n    \"field\": \"email\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 200\", ()=>{",
+									"    pm.expect(pm.response.code).to.equal(200)",
+									"})",
+									"",
+									"pm.test(\"Body with JWT token\", ()=>{",
+									"    pm.expect(pm.response.json().jwt).to.not.be.undefined",
+									"})",
+									"",
+									"const jwt = pm.response.json()?.jwt;",
+									"if(jwt) pm.collectionVariables.set(\"jwt_token\", jwt)"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"test-user\",\n    \"password\": \"P@ssword123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[200] happy path",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"test-user\",\n    \"password\": \"P@ssword123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/auth/login",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "181"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"b5-be+zRaFrlZJ0YfkHv40xnCQpjE0\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 06:22:44 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"jwt\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMCIsImlhdCI6MTc2MjA2NDU2NCwiZXhwIjoxNzYyMDg2MTY0fQ.mggi6-g4IFdTT8jVAZBj2ADBt1O7vHhugCtgj6BXVCc\"\n}"
+						},
+						{
+							"name": "[400] missing body",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"test-user\"\n    //\"password\": \"P@ssword123\" missing password\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/auth/login",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "30"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1e-gr4FiQA6Lbw+4zFrOgoYqXuvo4o\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 06:21:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"body is ill-formed\"\n}"
+						},
+						{
+							"name": "[400] invalid username",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"test-user-@\", // bad username\n    \"password\": \"P@ssword123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/auth/login",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Content-Length",
+									"value": "30"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1e-gr4FiQA6Lbw+4zFrOgoYqXuvo4o\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 06:22:18 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"body is ill-formed\"\n}"
+						},
+						{
+							"name": "[400] invalid password",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"test-user\",\n    \"password\": \"p@ssword123\" // no upper case char\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/auth/login",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "30"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1e-gr4FiQA6Lbw+4zFrOgoYqXuvo4o\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 06:24:25 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"body is ill-formed\"\n}"
+						},
+						{
+							"name": "[403] wrong password",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"test-user\",\n    \"password\": \"P@ssword123---\" // wrong password\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/auth/login",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "33"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"21-nhkFWPFchDBUTOjupL8iQtBqxUE\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 06:25:00 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Password do not match\"\n}"
+						},
+						{
+							"name": "[403] user lockout",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"lockout-user\",\n    \"password\": \"P@ssword123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/auth/login",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "27"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1b-NHLa3okTEF7yX0Yzh/oxialZN/0\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 06:25:37 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"User is lockout\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "/user/me",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status should be 200\", ()=>{",
+									"    pm.expect(pm.response.code).to.be.eq(200)",
+									"})",
+									"",
+									"pm.test(\"Username should be \\\"test-user\\\"\", ()=>{",
+									"    pm.expect(pm.response.json().username).to.be.eq(\"test-user\")",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/user/me",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"user",
+								"me"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[200] happy path",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/user/me",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"user",
+										"me"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "79"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4f-EprTj+UbX+5K5JCxv9Oud6e+VOA\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 06:33:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"username\": \"test-user\",\n    \"email\": \"test@email.com\",\n    \"role\": \"admin\",\n    \"favorites\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "/user/:id (admin)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/user/f20000000000000000000000",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"user",
+								"f20000000000000000000000"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[200] happy path",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/user/f20000000000000000000000",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"user",
+										"f20000000000000000000000"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "83"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"53-rWxAaDYpPWUWZq6CPeOFVq4Ccf0\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 06:36:06 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"username\": \"lockout-user\",\n    \"email\": \"lockout@user.com\",\n    \"role\": \"user\",\n    \"favorites\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "/user/me",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", () => {",
+									"    pm.expect(pm.response.code).to.eql(204)",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"dummy@email.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/user/me",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"user",
+								"me"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[204] happy path",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"dummy@email.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/user/me",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"user",
+										"me"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 06:37:01 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{jwt_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Movie",
+			"item": [
+				{
+					"name": "/movie",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", ()=>{",
+									"    pm.expect(pm.response.code).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/movie",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"movie"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[200] happy path",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/movie",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"movie"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1105"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"451-sqUmQgd5nZw0qJYVgLjYkTO5sx4\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 06:40:41 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"results\": [\n        {\n            \"id\": \"6906fca1a1b2ff50bd3d01c9\",\n            \"title\": \"Eternal Horizon\",\n            \"genres\": [\n                \"sci-fi\",\n                \"adventure\"\n            ],\n            \"durationMin\": 142,\n            \"synopsis\": \"A crew of astronauts discovers a mysterious planet that challenges their perception of time and reality.\",\n            \"relasedAt\": \"2023-11-15T00:00:00.000Z\"\n        },\n        {\n            \"id\": \"6906fca1a1b2ff50bd3d01ca\",\n            \"title\": \"Whispering Shadows\",\n            \"genres\": [\n                \"horror\",\n                \"mystery\"\n            ],\n            \"durationMin\": 97,\n            \"synopsis\": \"A small town is haunted by a series of unexplained disappearances that seem connected to an abandoned mansion.\",\n            \"relasedAt\": \"2021-10-31T00:00:00.000Z\"\n        },\n        {\n            \"id\": \"6906fca1a1b2ff50bd3d01cb\",\n            \"title\": \"The Last Melody\",\n            \"genres\": [\n                \"drama\",\n                \"music\"\n            ],\n            \"durationMin\": 125,\n            \"synopsis\": \"A talented pianist struggles to overcome personal tragedy while preparing for the concert of a lifetime.\",\n            \"relasedAt\": \"2022-05-20T00:00:00.000Z\"\n        },\n        {\n            \"id\": \"6906fca1a1b2ff50bd3d01cc\",\n            \"title\": \"Neon Streets\",\n            \"genres\": [\n                \"action\",\n                \"thriller\"\n            ],\n            \"durationMin\": 110,\n            \"synopsis\": \"In a futuristic city, a rogue detective must stop a criminal syndicate controlling the underground racing world.\",\n            \"relasedAt\": \"2024-03-10T00:00:00.000Z\"\n        }\n    ],\n    \"page\": 1,\n    \"limit\": 5\n}"
+						},
+						{
+							"name": "[200] query param title",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/movie?title=re",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"movie"
+									],
+									"query": [
+										{
+											"key": "title",
+											"value": "re"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "303"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"12f-xypF9CmFM65u3CinY7Vgl2z30yk\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 06:41:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"results\": [\n        {\n            \"id\": \"6906fca1a1b2ff50bd3d01cc\",\n            \"title\": \"Neon Streets\",\n            \"genres\": [\n                \"action\",\n                \"thriller\"\n            ],\n            \"durationMin\": 110,\n            \"synopsis\": \"In a futuristic city, a rogue detective must stop a criminal syndicate controlling the underground racing world.\",\n            \"relasedAt\": \"2024-03-10T00:00:00.000Z\"\n        }\n    ],\n    \"page\": 1,\n    \"limit\": 5\n}"
+						},
+						{
+							"name": "[200] query param genre",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/movie?genre=sci-fi",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"movie"
+									],
+									"query": [
+										{
+											"key": "genre",
+											"value": "sci-fi"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "299"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"12b-+ohblru4qiCKVaAydMDs+/Mq8yM\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 06:42:17 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"results\": [\n        {\n            \"id\": \"6906fca1a1b2ff50bd3d01c9\",\n            \"title\": \"Eternal Horizon\",\n            \"genres\": [\n                \"sci-fi\",\n                \"adventure\"\n            ],\n            \"durationMin\": 142,\n            \"synopsis\": \"A crew of astronauts discovers a mysterious planet that challenges their perception of time and reality.\",\n            \"relasedAt\": \"2023-11-15T00:00:00.000Z\"\n        }\n    ],\n    \"page\": 1,\n    \"limit\": 5\n}"
+						},
+						{
+							"name": "[200] with pagination",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/movie?page=2&limit=2",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"movie"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "2"
+										},
+										{
+											"key": "limit",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "576"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"240-s+jSy4svFG6FzFPrDV5Z9hsd2Ww\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 06:42:50 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"results\": [\n        {\n            \"id\": \"6906fca1a1b2ff50bd3d01ca\",\n            \"title\": \"Whispering Shadows\",\n            \"genres\": [\n                \"horror\",\n                \"mystery\"\n            ],\n            \"durationMin\": 97,\n            \"synopsis\": \"A small town is haunted by a series of unexplained disappearances that seem connected to an abandoned mansion.\",\n            \"relasedAt\": \"2021-10-31T00:00:00.000Z\"\n        },\n        {\n            \"id\": \"6906fca1a1b2ff50bd3d01cc\",\n            \"title\": \"Neon Streets\",\n            \"genres\": [\n                \"action\",\n                \"thriller\"\n            ],\n            \"durationMin\": 110,\n            \"synopsis\": \"In a futuristic city, a rogue detective must stop a criminal syndicate controlling the underground racing world.\",\n            \"relasedAt\": \"2024-03-10T00:00:00.000Z\"\n        }\n    ],\n    \"page\": 2,\n    \"limit\": 2\n}"
+						}
+					]
+				},
+				{
+					"name": "/movie/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"    pm.expect(pm.response.code).to.eql(200)",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"(test) {{$randomAdjective}} {{$randomNoun}}\",\n    \"genres\": [\n        \"adventure\",\n        \"test\"\n    ],\n    \"durationMin\": 90,\n    \"releasedAt\": \"2025\"\n    //synopsis can be ignore\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/movie/a10000000000000000000000",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"movie",
+								"a10000000000000000000000"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[200] happy path",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"(test) {{$randomAdjective}} {{$randomNoun}}\",\n    \"genres\": [\n        \"adventure\",\n        \"test\"\n    ],\n    \"durationMin\": 90,\n    \"releasedAt\": \"2025\"\n    //synopsis can be ignore\n}"
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/movie/a10000000000000000000000",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"movie",
+										"a10000000000000000000000"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "266"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"10a-DnxibLanH+GX8poRF4/nAOeGtrQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 07:34:00 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"a10000000000000000000000\",\n    \"title\": \"Eternal Horizon\",\n    \"genres\": [\n        \"sci-fi\",\n        \"adventure\"\n    ],\n    \"durationMin\": 142,\n    \"synopsis\": \"A crew of astronauts discovers a mysterious planet that challenges their perception of time and reality.\",\n    \"relasedAt\": \"2023-11-15T00:00:00.000Z\"\n}"
+						},
+						{
+							"name": "[400] invalid id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"(test) {{$randomAdjective}} {{$randomNoun}}\",\n    \"genres\": [\n        \"adventure\",\n        \"test\"\n    ],\n    \"durationMin\": 90,\n    \"releasedAt\": \"2025\"\n    //synopsis can be ignore\n}"
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/movie/LOL",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"movie",
+										"LOL"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "22"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"16-HvxzzVYLEXteKjq0hMYNikFu544\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 07:34:22 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Invalid id\"\n}"
+						},
+						{
+							"name": "[404] movie not found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"(test) {{$randomAdjective}} {{$randomNoun}}\",\n    \"genres\": [\n        \"adventure\",\n        \"test\"\n    ],\n    \"durationMin\": 90,\n    \"releasedAt\": \"2025\"\n    //synopsis can be ignore\n}"
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/movie/a1000000000000000000000a",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"movie",
+										"a1000000000000000000000a"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "27"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1b-yyxQBKeWc6trinxTXfg91HwQrPY\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 07:34:50 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Movie not found\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/movie (admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", () => {",
+									"    pm.expect(pm.response.code).to.eql(201)",
+									"})",
+									"",
+									"if (pm.response.json().id)",
+									"    pm.collectionVariables.set(\"tmp_movie_id\", pm.response.json().id)"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"(test) {{$randomAdjective}} {{$randomNoun}}\",\n    \"genres\": [\n        \"adventure\",\n        \"test\"\n    ],\n    \"durationMin\": 90,\n    \"releasedAt\": \"2025\"\n    //synopsis can be ignore\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/movie",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"movie"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[201] happy path",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"(test) {{$randomAdjective}} {{$randomNoun}}\",\n    \"genres\": [\n        \"adventure\",\n        \"test\"\n    ],\n    \"durationMin\": 90,\n    \"releasedAt\": \"2025\"\n    //synopsis can be ignore\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/movie",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"movie"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "165"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a5-DH5cCjuacFN8F3c+OoNUwjTMeJY\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 07:32:15 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"690708ffa4a1501b844b7cf8\",\n    \"title\": \"(test) neural alarm\",\n    \"genres\": [\n        \"adventure\",\n        \"test\"\n    ],\n    \"durationMin\": 90,\n    \"synopsis\": null,\n    \"relasedAt\": \"2025-01-01T00:00:00.000Z\"\n}"
+						},
+						{
+							"name": "[400] body is ill-formed",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Some Title\",\n    \"genres\": [\n        \"adventure\"\n    ],\n    \"durationMin\": 90,\n    \"releasedAt\": \"lol\" // wrong date format\n    // synopsis can be ignore\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/movie",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"movie"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "30"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1e-gr4FiQA6Lbw+4zFrOgoYqXuvo4o\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 07:27:35 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"body is ill-formed\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/movie/:id (admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", () => {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"this is a new title!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/movie/{{tmp_movie_id}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"movie",
+								"{{tmp_movie_id}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[204] happy path",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"this is a new title!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/movie/{{tmp_movie_id}}",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"movie",
+										"{{tmp_movie_id}}"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 07:51:48 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "[400] invalid id",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"this is a new title!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/movie/LOL",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"movie",
+										"LOL"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "22"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"16-7olxQVTGqPid96y6BsFT14eN0p4\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 07:54:07 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Invalid Id\"\n}"
+						},
+						{
+							"name": "[404] movie not found",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"this is a new title!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/movie/a1000000000000000000000a",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"movie",
+										"a1000000000000000000000a"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "27"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1b-yyxQBKeWc6trinxTXfg91HwQrPY\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 07:54:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Movie not found\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/movie (admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", () => {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/movie/{{tmp_movie_id}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"movie",
+								"{{tmp_movie_id}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[204] happy path",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/movie/{{tmp_movie_id}}",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"movie",
+										"{{tmp_movie_id}}"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 07:58:34 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "[400] invalid id",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/movie/LOL",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"movie",
+										"LOL"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "22"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"16-7olxQVTGqPid96y6BsFT14eN0p4\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 07:59:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Invalid Id\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Serie / Season / Episode",
+			"item": [
+				{
+					"name": "/serie",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", ()=>{",
+									"    pm.expect(pm.response.code).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/serie?page=2&limit=2",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"serie"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[200] happy path",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/serie",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"serie"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "479"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1df-YgcMRZxHX72AH/LiQUIwarry4V4\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 08:34:07 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"results\": [\n        {\n            \"id\": \"b10000000000000000000000\",\n            \"title\": \"Crimson Divide\",\n            \"genres\": [\n                \"srama\",\n                \"thriller\"\n            ],\n            \"status\": \"ongoing\"\n        },\n        {\n            \"id\": \"b20000000000000000000000\",\n            \"title\": \"Echoes of Tomorrow\",\n            \"genres\": [\n                \"aci-Fi\",\n                \"mystery\"\n            ],\n            \"status\": \"ended\"\n        },\n        {\n            \"id\": \"b30000000000000000000000\",\n            \"title\": \"Verdant Kingdom\",\n            \"genres\": [\n                \"fantasy\",\n                \"adventure\"\n            ],\n            \"status\": \"ongoing\"\n        },\n        {\n            \"id\": \"b40000000000000000000000\",\n            \"title\": \"Steel Hearts\",\n            \"genres\": [\n                \"action\",\n                \"romance\"\n            ],\n            \"status\": \"ended\"\n        }\n    ],\n    \"total\": 4,\n    \"page\": 1,\n    \"pageSize\": 5\n}"
+						},
+						{
+							"name": "[200] query param title",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/serie?title=da",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"serie"
+									],
+									"query": [
+										{
+											"key": "title",
+											"value": "da"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "157"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"9d-Ka2MQ5CA1d6r275vyyr3esDI19Y\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 08:34:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"results\": [\n        {\n            \"id\": \"b30000000000000000000000\",\n            \"title\": \"Verdant Kingdom\",\n            \"genres\": [\n                \"fantasy\",\n                \"adventure\"\n            ],\n            \"status\": \"ongoing\"\n        }\n    ],\n    \"total\": 1,\n    \"page\": 1,\n    \"pageSize\": 5\n}"
+						},
+						{
+							"name": "[200] query param genre",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/serie?genre=adventure",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"serie"
+									],
+									"query": [
+										{
+											"key": "genre",
+											"value": "adventure"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "157"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"9d-Ka2MQ5CA1d6r275vyyr3esDI19Y\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 08:35:18 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"results\": [\n        {\n            \"id\": \"b30000000000000000000000\",\n            \"title\": \"Verdant Kingdom\",\n            \"genres\": [\n                \"fantasy\",\n                \"adventure\"\n            ],\n            \"status\": \"ongoing\"\n        }\n    ],\n    \"total\": 1,\n    \"page\": 1,\n    \"pageSize\": 5\n}"
+						},
+						{
+							"name": "[200] with pagination",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/serie?page=2&limit=2",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"serie"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "2"
+										},
+										{
+											"key": "limit",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "259"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"103-yzg2PIFQHbpM69r3w50jee/qWxE\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 08:36:24 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"results\": [\n        {\n            \"id\": \"b20000000000000000000000\",\n            \"title\": \"Echoes of Tomorrow\",\n            \"genres\": [\n                \"aci-Fi\",\n                \"mystery\"\n            ],\n            \"status\": \"ended\"\n        },\n        {\n            \"id\": \"b40000000000000000000000\",\n            \"title\": \"Steel Hearts\",\n            \"genres\": [\n                \"action\",\n                \"romance\"\n            ],\n            \"status\": \"ended\"\n        }\n    ],\n    \"total\": 2,\n    \"page\": 2,\n    \"pageSize\": 2\n}"
+						}
+					]
+				},
+				{
+					"name": "/serie/:serieId/season/:seasonId/episode",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", ()=>{",
+									"    pm.expect(pm.response.code).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/serie/B20000000000000000000000/season/B2C300000000000000000000/episode",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"serie",
+								"B20000000000000000000000",
+								"season",
+								"B2C300000000000000000000",
+								"episode"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[200] happy path",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/serie/B20000000000000000000000/season/B2C300000000000000000000/episode",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"serie",
+										"B20000000000000000000000",
+										"season",
+										"B2C300000000000000000000",
+										"episode"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "369"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"171-gU36Snx6KdDu0/gDfvsqOKEVigI\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 10:31:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"results\": [\n        {\n            \"id\": \"e30000000000000000000000\",\n            \"title\": \"Temporal Shift\",\n            \"serieId\": \"b20000000000000000000000\",\n            \"seasonId\": \"b2c300000000000000000000\",\n            \"epNo\": 1,\n            \"durationMin\": 30\n        },\n        {\n            \"id\": \"e40000000000000000000000\",\n            \"title\": \"The Last Frequency\",\n            \"serieId\": \"b20000000000000000000000\",\n            \"seasonId\": \"b2c300000000000000000000\",\n            \"epNo\": 2,\n            \"durationMin\": 30\n        }\n    ],\n    \"total\": 2,\n    \"page\": 1,\n    \"pageSize\": 5\n}"
+						},
+						{
+							"name": "[200] query param title",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/serie/B20000000000000000000000/season/B2C300000000000000000000/episode?title=te",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"serie",
+										"B20000000000000000000000",
+										"season",
+										"B2C300000000000000000000",
+										"episode"
+									],
+									"query": [
+										{
+											"key": "title",
+											"value": "te"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "205"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"cd-RvkzrAlshvnB06zA0a0KDIY2I00\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 10:32:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"results\": [\n        {\n            \"id\": \"e30000000000000000000000\",\n            \"title\": \"Temporal Shift\",\n            \"serieId\": \"b20000000000000000000000\",\n            \"seasonId\": \"b2c300000000000000000000\",\n            \"epNo\": 1,\n            \"durationMin\": 30\n        }\n    ],\n    \"total\": 1,\n    \"page\": 1,\n    \"pageSize\": 5\n}"
+						},
+						{
+							"name": "[200] with pagination",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/serie/B20000000000000000000000/season/B2C300000000000000000000/episode?page=2&limit=1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"serie",
+										"B20000000000000000000000",
+										"season",
+										"B2C300000000000000000000",
+										"episode"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "2"
+										},
+										{
+											"key": "limit",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "209"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"d1-fP8CSS0OCy/VAmhLh0/drqF+n0o\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 10:33:03 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"results\": [\n        {\n            \"id\": \"e40000000000000000000000\",\n            \"title\": \"The Last Frequency\",\n            \"serieId\": \"b20000000000000000000000\",\n            \"seasonId\": \"b2c300000000000000000000\",\n            \"epNo\": 2,\n            \"durationMin\": 30\n        }\n    ],\n    \"total\": 1,\n    \"page\": 2,\n    \"pageSize\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "/serie (admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", () => {",
+									"    pm.expect(pm.response.code).to.eql(201)",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"(test) {{$randomAdjective}} {{$randomNoun}}\",\n    \"genres\": [\n        \"sci-fi\"\n    ],\n    \"status\": \"ongoing\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/serie",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"serie"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[200] happy path",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"(test) {{$randomAdjective}} {{$randomNoun}}\",\n    \"genres\": [\n        \"sci-fi\"\n    ],\n    \"status\": \"ongoing\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/serie",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"serie"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "103"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"67-STkJOieEpSipv7qUo7dJ4wEWEcw\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 09:11:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"69072038b15e13042579940b\",\n    \"title\": \"(test) neural matrix\",\n    \"genres\": [\n        \"sci-fi\"\n    ],\n    \"status\": \"ongoing\"\n}"
+						},
+						{
+							"name": "[400] missing body",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    //\"title\": \"(test) {{$randomAdjective}} {{$randomNoun}}\", missing title!\n    \"genres\": [\n        \"sci-fi\"\n    ],\n    \"status\": \"ongoing\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/serie",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"serie"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "30"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1e-gr4FiQA6Lbw+4zFrOgoYqXuvo4o\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 09:11:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"body is ill-formed\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/serie/:serieid/season (admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", () => {",
+									"    pm.expect(pm.response.code).to.eql(201)",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"seasonNo\": 1,\n    \"episodeNb\": 4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/serie/B10000000000000000000000/season",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"serie",
+								"B10000000000000000000000",
+								"season"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[200] happy path",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"seasonNo\": 1,\n    \"episodeNb\": 4\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/serie/B10000000000000000000000/season",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"serie",
+										"B10000000000000000000000",
+										"season"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "97"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"61-39xzt8SCQbCrJLJNx5nMrYF6G0s\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 09:15:07 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"6907211bb15e13042579941b\",\n    \"serieId\": \"b10000000000000000000000\",\n    \"episodeNb\": 0,\n    \"seasonNo\": 1\n}"
+						},
+						{
+							"name": "[400] missing body",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    //\"seasonNo\": 1\n    \"episodeNb\": 4\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/serie/B10000000000000000000000/season",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"serie",
+										"B10000000000000000000000",
+										"season"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "30"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1e-gr4FiQA6Lbw+4zFrOgoYqXuvo4o\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 09:18:25 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"body is ill-formed\"\n}"
+						},
+						{
+							"name": "[400] invalid serie id",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"seasonNo\": 1,\n    \"episodeNb\": 4\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/serie/LOL/season",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"serie",
+										"LOL",
+										"season"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "22"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"16-7olxQVTGqPid96y6BsFT14eN0p4\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 09:17:08 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Invalid serie Id\"\n}"
+						},
+						{
+							"name": "[404] serie not found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"seasonNo\": 1,\n    \"episodeNb\": 4\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/serie/B1000000000000000000000F/season",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"serie",
+										"B1000000000000000000000F",
+										"season"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "27"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1b-kuwaE1uxktPgMZPFB35iAVJIB1o\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 09:17:48 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Serie not found\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/serie/:serieId/season/:seasonId/episode (admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", () => {",
+									"    pm.expect(pm.response.code).to.eql(201)",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"(test) {{$randomAdjective}} {{$randomNoun}}\",\n    \"epNo\": 2,\n    \"durationMin\": 30\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/serie/B10000000000000000000000/season/B1C100000000000000000000/episode",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"serie",
+								"B10000000000000000000000",
+								"season",
+								"B1C100000000000000000000",
+								"episode"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[201] happy path",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"(test) {{$randomAdjective}} {{$randomNoun}}\",\n    \"epNo\": 2,\n    \"durationMin\": 30\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/serie/B10000000000000000000000/season/B1C100000000000000000000/episode",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"serie",
+										"B10000000000000000000000",
+										"season",
+										"B1C100000000000000000000",
+										"episode"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "170"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"aa-e5PA/4EC7RFEmCt4xd6D1asTOdM\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 09:44:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"690727fe51739c4e0a5f2e0e\",\n    \"title\": \"(test) mobile application\",\n    \"serieId\": \"b10000000000000000000000\",\n    \"seasonId\": \"c10000000000000000000000\",\n    \"epNo\": 2,\n    \"durationMin\": 30\n}"
+						},
+						{
+							"name": "[400] missing body",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"(test) {{$randomAdjective}} {{$randomNoun}}\",\n    //\"epNo\": 2,\n    \"durationMin\": 30\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/serie/B10000000000000000000000/season/B1C100000000000000000000/episode",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"serie",
+										"B10000000000000000000000",
+										"season",
+										"B1C100000000000000000000",
+										"episode"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "30"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1e-gr4FiQA6Lbw+4zFrOgoYqXuvo4o\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 09:47:44 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"body is ill-formed\"\n}"
+						},
+						{
+							"name": "[400] invalid serie id",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"(test) {{$randomAdjective}} {{$randomNoun}}\",\n    \"epNo\": 2,\n    \"durationMin\": 30\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/serie/LOL/season/B1C100000000000000000000/episode",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"serie",
+										"LOL",
+										"season",
+										"B1C100000000000000000000",
+										"episode"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "28"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1c-ngJToSenSs4RPn9hNHT2ACY8UZ0\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 09:45:39 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Invalid serie Id\"\n}"
+						},
+						{
+							"name": "[400] invalid season id",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"(test) {{$randomAdjective}} {{$randomNoun}}\",\n    \"epNo\": 2,\n    \"durationMin\": 30\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/serie/B10000000000000000000000/season/LOL/episode",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"serie",
+										"B10000000000000000000000",
+										"season",
+										"LOL",
+										"episode"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "29"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1d-+lZ+8vkZi1tWr8YQLpku6ud7dZE\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 09:46:17 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Invalid season Id\"\n}"
+						},
+						{
+							"name": "[404] serie not found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"(test) {{$randomAdjective}} {{$randomNoun}}\",\n    \"epNo\": 2,\n    \"durationMin\": 30\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/serie/B1000000000000000000000F/season/B1C100000000000000000000/episode",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"serie",
+										"B1000000000000000000000F",
+										"season",
+										"B1C100000000000000000000",
+										"episode"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "27"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1b-kuwaE1uxktPgMZPFB35iAVJIB1o\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 09:46:43 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Serie not found\"\n}"
+						},
+						{
+							"name": "[404] season not found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"(test) {{$randomAdjective}} {{$randomNoun}}\",\n    \"epNo\": 2,\n    \"durationMin\": 30\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/serie/B10000000000000000000000/season/B1C10000000000000000000F/episode",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"serie",
+										"B10000000000000000000000",
+										"season",
+										"B1C10000000000000000000F",
+										"episode"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "28"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1c-QfWpa/kT6605anKn0aGc8UiEF1o\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 09:47:03 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Season not found\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Rating",
+			"item": [
+				{
+					"name": "/rating",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"    pm.expect(pm.response.code).to.eql(200)",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"target\": \"Movie\",\n    \"targetId\": \"A10000000000000000000000\",\n    \"score\": 5,\n    \"review\": \"test review\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/rating",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"rating"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[200] happy path",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"target\": \"Movie\",\n    \"targetId\": \"A10000000000000000000000\",\n    \"score\": 5,\n    \"review\": \"test review\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/rating",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"rating"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "125"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"7d-N4luOsTZUlRZIt+PGlnMzlmwpfk\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 11:12:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"userId\": \"f10000000000000000000000\",\n    \"target\": \"Movie\",\n    \"targetId\": \"a10000000000000000000000\",\n    \"score\": 5,\n    \"review\": \"test review\"\n}"
+						},
+						{
+							"name": "[400] missing body",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"target\": \"Movie\",\n    \"targetId\": \"A10000000000000000000000\",\n    //\"score\": 5,\n    \"review\": \"test review\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/rating",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"rating"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "30"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1e-gr4FiQA6Lbw+4zFrOgoYqXuvo4o\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 11:13:31 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"body is ill-formed\"\n}"
+						},
+						{
+							"name": "[404] media not found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"target\": \"Movie\",\n    \"targetId\": \"A1000000000000000000000F\",\n    \"score\": 5,\n    \"review\": \"test review\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/rating",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"rating"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "27"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1b-yyxQBKeWc6trinxTXfg91HwQrPY\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 11:14:04 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Movie not found\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/rating/avg/movie/:movieId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"    pm.expect(pm.response.code).to.eql(200)",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/rating/avg/movie/a10000000000000000000000",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"rating",
+								"avg",
+								"movie",
+								"a10000000000000000000000"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[200] happy path",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/rating/avg/movie/a10000000000000000000000",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"rating",
+										"avg",
+										"movie",
+										"a10000000000000000000000"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "40"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"28-hAC2mj7i7SFbrqO0mTY3EcTFymY\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 12:00:49 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"count\": 3,\n    \"average\": 2.6666666666666665\n}"
+						}
+					]
+				},
+				{
+					"name": "/rating/avg/serie/:serieId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {",
+									"    pm.expect(pm.response.code).to.eql(200)",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/rating/avg/serie/b10000000000000000000000",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"rating",
+								"avg",
+								"serie",
+								"b10000000000000000000000"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[200] happy path",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/rating/avg/serie/b10000000000000000000000",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"rating",
+										"avg",
+										"serie",
+										"b10000000000000000000000"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "25"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"19-8uZIe/AwxKh9h+IBeIypj34VKrM\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Nov 2025 12:02:18 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"count\": 2,\n    \"average\": 7.5\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": ""
+		},
+		{
+			"key": "jwt_token",
+			"value": ""
+		},
+		{
+			"key": "tmp_movie_id",
+			"value": ""
+		}
+	]
+}

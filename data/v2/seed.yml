@@ -143,3 +143,29 @@ Episode:
     title: Ashes of the Heart
     epNo: 2
     durationMin: 30
+Rating:
+  - userRef: f10000000000000000000000
+    targetKind: Movie
+    targetRef:  A10000000000000000000000
+    score: 5
+    review: test review
+  - userRef: f10000000000000000000000
+    targetKind: Movie
+    targetRef:  A10000000000000000000000
+    score: 2
+    review: test review
+  - userRef: f10000000000000000000000
+    targetKind: Movie
+    targetRef:  A10000000000000000000000
+    score: 1
+    review: test review
+  - userRef: f10000000000000000000000
+    targetKind: Episode
+    targetRef:  E10000000000000000000000
+    score: 7
+    review: test review
+  - userRef: f10000000000000000000000
+    targetKind: Episode
+    targetRef:  E20000000000000000000000
+    score: 8
+    review: test review

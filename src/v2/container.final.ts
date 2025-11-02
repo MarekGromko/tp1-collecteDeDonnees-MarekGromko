@@ -6,6 +6,7 @@ import { MovieService } from "./service/movie.service";
 import { MovieController } from "./controller/movie.controller";
 import { SerieService } from "./service/serie.service";
 import { SerieController } from "./controller/serie.controller";
+import { RatingController } from "./controller/rating.controller";
 
 export const containerFinal = containerBase
     .provideClass('AuthService', AuthService)
@@ -15,3 +16,4 @@ export const containerFinal = containerBase
     .provideClass('MovieController', MovieController)
     .provideClass('SerieService', SerieService)
     .provideClass('SerieController', SerieController)
+    .provideClass('RatingController', RatingController)
