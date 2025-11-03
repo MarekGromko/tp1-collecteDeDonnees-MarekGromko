@@ -8,7 +8,11 @@ import { Movie } from "../model/movie.model";
 import { isValidObjectId } from "mongoose";
 import { PreAuthorizeMw } from "../middleware/security.middleware";
 import { ValidationMw } from "../middleware/validation.middleware";
+import { containerBase } from "../container.base";
 
+const LoggerMw = containerBase
+    .resolve('LoggerFactory')
+    .middleware('MovieController');
 
 export class MovieController {
     static readonly inject = ['MovieService'] as const;
@@ -16,6 +20,7 @@ export class MovieController {
         private readonly movieService: MovieService
     ) {}
 
+    @Middleware(LoggerMw)
     @Route("GET", "/")
     getMovies: RequestHandler = async (req, res)=>{
         const {
@@ -40,7 +45,7 @@ export class MovieController {
         });
 
         const response: MovieSearchReponse = {
-            results: movies.map(MovieDetailResponse.fromModel),
+            results:    movies.map(MovieDetailResponse.fromModel),
             total:      movies.length,
             page:       truePage,
             pageSize:   trueLimit
@@ -48,6 +53,7 @@ export class MovieController {
         wrapOk(res).Ok().end(response);
     }
 
+    @Middleware(LoggerMw)
     @Route("GET", "/:id")
     getMovieById: RequestHandler = async (req, res)=>{
         const { id } = req.params;
@@ -61,6 +67,7 @@ export class MovieController {
         wrapOk(res).Ok().end(MovieDetailResponse.fromModel(movie));
     }
 
+    @Middleware(LoggerMw)
     @Middleware(ValidationMw(PostMovieRequest.validation))
     @Middleware(PreAuthorizeMw(user=>user.role === 'admin'))
     @Route("POST", "/")
@@ -76,6 +83,7 @@ export class MovieController {
         wrapOk(res).Created().end(MovieDetailResponse.fromModel(movie));
     }
 
+    @Middleware(LoggerMw)
     @Middleware(ValidationMw(PatchMovieRequest.validation))
     @Middleware(PreAuthorizeMw(user=>user.role === 'admin'))
     @Route("PATCH", "/:id")
@@ -107,6 +115,7 @@ export class MovieController {
         wrapOk(res).NoContent();
     }
 
+    @Middleware(LoggerMw)
     @Middleware(PreAuthorizeMw(user=>user.role === 'admin'))
     @Route("DELETE", "/:id")
     deleteMovie: RequestHandler = async (req, res)=>{

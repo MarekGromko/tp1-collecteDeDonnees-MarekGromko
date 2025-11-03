@@ -12,6 +12,11 @@ import { Season } from "../model/season.mode";
 import { PostSeasonRequest, SeasonDetailResponse } from "../dto/season.dto";
 import { EpisodeDetailResponse, EpisodeSearchResponse, PostEpisodeRequest } from "../dto/episode.dto";
 import { Episode } from "../model/episode.model";
+import { containerBase } from "../container.base";
+
+const LoggerMw = containerBase
+    .resolve('LoggerFactory')
+    .middleware('SerieController');
 
 const ValidateParamSerieIdMw: RequestHandler = async (req, res, next)=>{
     const { serieId } = req.params;
@@ -68,8 +73,8 @@ export class SerieController {
         wrapOk(res).Ok().end(response);
     }
 
-    @Middleware(ValidationMw(PostSerieRequest.validation))
     @Middleware(PreAuthorizeMw(user=>user.role === 'admin'))
+    @Middleware(ValidationMw(PostSerieRequest.validation))
     @Route("POST", "/")
     addSerie: RequestHandler = async (req, res)=>{
         const body = req.body as PostSerieRequest;
@@ -91,7 +96,7 @@ export class SerieController {
         const season = await Season.Model.create({
             serieRef: new Types.ObjectId(serieId),
             seasonNo: body.seasonNo,
-            episodeNb: 0,
+            episodeNb: body.episodeNb || 0,
         })
         ///
         wrapOk(res).Created().end(SeasonDetailResponse.fromModel(season));

@@ -6,10 +6,16 @@ import { wrapErr, wrapOk } from "@common/ResponseWrapper";
 import { ValidationMw } from "../middleware/validation.middleware";
 import { Types } from "mongoose";
 import { User } from "../model/user.model";
+import { containerBase } from "../container.base";
+
+const LoggerMw = containerBase
+    .resolve('LoggerFactory')
+    .middleware('SerieController');
 
 export class UserController {
     public readonly inject = [] as const;
 
+    @Middleware(LoggerMw)
     @Middleware(PreAuthorizeMw())
     @Route("GET", "/me")
     async getUserInfo(req: AuthorizedRequest, res: Response) {
@@ -22,6 +28,7 @@ export class UserController {
         };
         wrapOk(res).Ok().end(response);
     }
+    @Middleware(LoggerMw)
     @Middleware(PreAuthorizeMw())
     @Middleware(ValidationMw(PatchUserRequest.validate))
     @Route("PATCH", "/me")
@@ -56,6 +63,7 @@ export class UserController {
         wrapOk(res).NoContent();
     }
 
+    @Middleware(LoggerMw)
     @Middleware(PreAuthorizeMw(user => user.role === 'admin'))
     @Route("GET", "/:id")
     async getUserById(req: Request, res: Response) {

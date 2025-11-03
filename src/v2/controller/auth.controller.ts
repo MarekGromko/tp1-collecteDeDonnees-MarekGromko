@@ -1,22 +1,23 @@
 import { ErrorHandler, Middleware, Route } from "@common/decorator/controller.decorator";
-import { ErrorRequestHandler, Request, RequestHandler, Response } from "express";
+import { ErrorRequestHandler, RequestHandler } from "express";
 import { AuthError, AuthService } from "../service/auth.service";
 import { LoginRequest, RegisterRequest } from "../dto/auth.dto";
 import { ValidationMw } from "../middleware/validation.middleware";
 import { wrapErr, wrapOk } from "@common/ResponseWrapper";
-import LoggerFactory, { Logger } from "@common/LoggerFactory";
 import { JwtUtil } from "../utility/jwt.utility";
+import { containerBase } from "../container.base";
+
+const LoggerMw = containerBase
+    .resolve('LoggerFactory')
+    .middleware('AuthController');
 
 export class AuthController{
-    static readonly inject = ['LoggerFactory','AuthService'] as const;
-    public logger: Logger;
+    static readonly inject = ['AuthService'] as const;
     constructor(
-        loggerFactory: LoggerFactory,
         private authService: AuthService
-    ){
-        this.logger = loggerFactory.service("AuthController");
-    }
+    ){}
 
+    @Middleware(LoggerMw)
     @Middleware(ValidationMw(LoginRequest.validate))
     @Route('POST', '/login')
     login: RequestHandler = async (req, res) => {
@@ -26,6 +27,7 @@ export class AuthController{
         wrapOk(res).Ok().end({jwt});
     }
 
+    @Middleware(LoggerMw)
     @Middleware(ValidationMw(RegisterRequest.validate))
     @Route('POST', '/register')
     register: RequestHandler = async (req , res) => {

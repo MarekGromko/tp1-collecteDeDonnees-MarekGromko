@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import { MediaService } from "../service/MediaService";
-import { wrapOk } from "../../common/ResponseWrapper";
+import { wrapErr, wrapOk } from "../../common/ResponseWrapper";
 
 /**
  * Controller for all medias related endpoint
@@ -39,8 +39,11 @@ class MediaController {
      */
     public getMediaById(req: Request, res: Response) {
         const {id} = req.params;
-        const medias = this.service.getMediaById(id);
-        wrapOk(res).Ok().end(medias);
+        const media = this.service.getMediaById(id);
+        if(!media)
+            wrapErr(res).NotFound().end('media not found')
+        else
+            wrapOk(res).Ok().end(media);
     }
     /**
      * Endpoint to add a media

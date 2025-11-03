@@ -7,7 +7,7 @@ export interface MovieDetailResponse {
     genres: string[],
     durationMin: number,
     synopsis: string | null,
-    relasedAt: string | null
+    releasedAt: string | null
 }
 export namespace MovieDetailResponse {
     export const fromModel = (movie: Movie.Model)=>({
@@ -16,7 +16,7 @@ export namespace MovieDetailResponse {
         genres:         movie.genres,
         durationMin:    movie.durationMin,
         synopsis:       movie.synopsis || null,
-        relasedAt:      movie.releasedAt?.toISOString() || null
+        releasedAt:      movie.releasedAt?.toISOString() || null
     });
 }
 

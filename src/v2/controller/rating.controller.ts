@@ -9,11 +9,17 @@ import { Movie } from "../model/movie.model";
 import { wrapErr, wrapOk } from "@common/ResponseWrapper";
 import { Episode } from "../model/episode.model";
 import { Serie } from "../model/serie.model";
+import { containerBase } from "../container.base";
+
+const LoggerMw = containerBase
+    .resolve('LoggerFactory')
+    .middleware('RatingController');
 
 export class RatingController {
     static readonly inject = [] as const;
     constructor(){}
     
+    @Middleware(LoggerMw)
     @Middleware(PreAuthorizeMw())
     @Middleware(ValidationMw(PostRatingRequest.validate))
     @Route('POST', '/')
@@ -37,7 +43,7 @@ export class RatingController {
             targetKind: rating.target,
             targetRef:  new Types.ObjectId(rating.targetId)
         });
-        wrapOk(res).Ok().end(RatingDetailResponse.fromModel(result));
+        wrapOk(res).Created().end(RatingDetailResponse.fromModel(result));
     }
 
     @Route("GET", "/avg/movie/:movieId")

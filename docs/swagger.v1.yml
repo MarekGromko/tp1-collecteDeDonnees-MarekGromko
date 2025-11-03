@@ -1,0 +1,546 @@
+openapi: '3.0.0'
+info:
+  title: 'TP1 Api doc'
+  description: > 
+    [DEPRECATED]
+    This API is deprecated, following to rollout of the v2
+  version: 1.0.0
+
+externalDocs:
+  description: API v2 Documentation
+  url: http://localhost:8080/docs/v2
+
+servers:
+  - url: /api/v1
+    description: v1 base path
+
+tags:
+  - name: Auth
+    description: Authentication and session management
+  - name: Media
+    description: Media CRUD endpoints
+  - name: Film
+    description: Film CRUD endpoints
+  - name: Serie
+    description: Serie/Season/Episode CRUD endpoints
+
+components:
+  securitySchemes:
+    cookieSkey:
+      type: apiKey
+      in: cookie
+      name: skey
+  schemas:
+    AuthRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          example: SomeP@assword123
+    AbstractMedia: 
+      type: object
+      properties:
+        id: 
+          type: string
+          example: f4a1
+        title:
+          type: string
+          example: Star Wars
+        genre: 
+          type: string
+          example: sci-fi
+        year:
+          type: number
+          example: 2006
+        rating:
+          type: number
+          example: 4
+        platform:
+          type: string
+          example: Netflix
+    SerieDetail:
+      allOf:
+        - $ref: '#/components/schemas/AbstractMedia'
+        - type: object
+          properties: 
+            mediaType: 
+              type: string
+              enum:
+                - serie
+            status: 
+              type: string
+              enum:
+                - ongoing
+                - done
+            seasons: 
+              type: array
+              items:
+                $ref: '#/components/schemas/SeasonDetail'
+    FilmDetail:
+      allOf:
+        - $ref: '#/components/schemas/AbstractMedia'
+        - type: object
+          properties:
+            mediaType:
+              type: string
+              enum:
+                - film
+            duration:
+              type: number
+            watched:
+              type: boolean
+    SeasonDetail:
+      type: object
+      properties:
+        seasonNumber:
+          type: number
+          example: 3
+        releasedDate:
+          type: string
+          format: date
+        episodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/EpisodeDetail'
+    EpisodeDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 3f42
+        title:
+          type: string
+          example: Pilote
+        duration:
+          type: number
+        episodeNumber:
+          type: number
+        watched:
+          type: boolean
+
+paths:
+  # auth
+  '/register': 
+    post: 
+      deprecated: true
+      summary:  Register a new user into the API
+      tags: [Auth]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthRequest'
+      responses:
+        204:
+          description: The user was successfully created
+        409: 
+          description: The username is already in use
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: email already in use
+        400:
+          description: The body is incomplete
+  '/login':
+    post:
+      deprecated: true
+      summary: Allow the user to authenticate themselves
+      tags: [Auth]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthRequest'
+      responses:
+        204:
+          description: > 
+            Successfully authenticate the user, 
+            populate its cookie with a session key
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: skey=abcde12345; Path=/;
+        400:
+          description: >
+            When the password is wrong or the input are inadequate
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: 
+                    type: string
+                    example: wrong password
+        404:
+          description: >
+            When the email does not match any user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: user not found
+        401:
+          description: >
+            When the user is in timeout (after too many failed password match)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: user in timeout
+  # media
+  '/medias': 
+    get:
+      deprecated: true
+      summary: Get medias with filter in query parameter
+      tags: [Media]
+      parameters:
+        - name: title
+          description: Filter medias by title
+          in: query
+          required: false
+          schema:
+            type: string
+            example: star
+        - name: genre
+          description: Filter medias by genre
+          in: query
+          required: false
+          schema:
+            type: string
+            example: sci-fi
+        - name: type
+          description: Filter medias by type ('film' or 'serie')
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - film
+              - serie
+        - name: year
+          description: Filter medias by a released year upper bound
+          in: query
+          required: false
+          schema:
+            type: number
+            example: 2006
+      responses:
+        200:
+          description: >
+            A list of unknown media (serie or film) matching the filter
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    - $ref: '#/components/schemas/FilmDetail'
+                    - $ref: '#/components/schemas/SerieDetail'
+    post:
+      deprecated: true
+      security:
+        - cookieSkey: []
+      summary: Create a new medias and persist it
+      tags: [Media]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/FilmDetail'
+                - $ref: '#/components/schemas/SerieDetail'
+          
+      responses:
+        403:
+          description: >
+            User is login but does not have the necessary privileges
+              403:
+        401:
+          description: >
+            User is required to be login
+        204:
+          description: >
+            The media was successfully created        
+  '/medias/{id}':
+    get:
+      deprecated: true
+      summary: Get a single media given its id
+      tags: [Media]
+      parameters:
+        - name: id
+          description: The media id to fetch
+          required: true
+          in: path
+          schema:
+            type: string
+            example: 4a2f
+      responses:
+        200:
+          description: >
+            The media matchin the given path id
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/FilmDetail'
+                  - $ref: '#/components/schemas/SerieDetail'
+        404:
+          description: >
+            When the given id does not match any media
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: media not found
+    put:
+      deprecated: true
+      security:
+        - cookieSkey: []
+      summary: >
+        Modify partialy on fully a media
+      tags: [Media]
+      parameters:
+        - name: id
+          description: The media id to fetch
+          required: true
+          in: path
+          schema:
+            type: string
+            example: 4a2f
+      requestBody:
+        content:
+          application/json:
+            schema:
+                oneOf:
+                  - $ref: '#/components/schemas/FilmDetail'
+                  - $ref: '#/components/schemas/SerieDetail'
+      responses:
+        403:
+          description: >
+            User is login but does not have the necessary privileges
+              403:
+        401:
+          description: >
+            User is required to be login
+        204:
+          description: >
+            The media was successfully modified
+    delete:
+      deprecated: true
+      security:
+        - cookieSkey: []
+      summary: >
+        Delete a media
+      tags: [Media]
+      parameters:
+        - name: id
+          description: The media id to fetch
+          required: true
+          in: path
+          schema:
+            type: string
+            example: 4a2f
+      requestBody:
+        content:
+          application/json:
+            schema:
+                oneOf:
+                  - $ref: '#/components/schemas/FilmDetail'
+                  - $ref: '#/components/schemas/SerieDetail'
+      responses:
+        403:
+          description: >
+            User is login but does not have the necessary privileges
+              403:
+        401:
+          description: >
+            User is required to be login
+        204:
+          description: >
+            The media was successfully modified
+  # film
+  '/film':
+    post:
+      deprecated: true
+      summary: 
+        Create a new film
+      tags: [Film]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FilmDetail'
+      responses:
+        204:
+          description: >
+            The film was successfully created
+        400:
+          description: >
+            The request does not respect the FilmDetail format
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: body is ill-formed
+                  field: 
+                    type: string
+                    example: title
+                  value:
+                    oneOf:
+                      - type: number
+                      - type: string
+  # 
+  '/series':
+    post:
+      deprecated: true
+      summary: > 
+        Create a new serie
+      tags: [Serie]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SerieDetail'
+      responses:
+        400:
+          description: >
+            The request does not respect the SerieDetail format
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: body is ill-formed
+                  field: 
+                    type: string
+                    example: title
+                  value:
+                    oneOf:
+                      - type: number
+                      - type: string
+        204:
+          description: >
+            The serie was successfully created
+  '/series/{serieId}/episodes':
+    get:
+      deprecated: true
+      summary: >
+        Get all episodes from a serie given its id
+      tags: [Serie]
+      parameters:
+        - name: serieId
+          description: The serie id to fetch
+          required: true
+          in: path
+          schema:
+            type: string
+            example: 4a2f
+      responses:
+        404:
+          description: >
+            When no serie match the fiven serieId
+        200:
+          description: >
+            A list of Episode belonging to the given serie
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/EpisodeDetail'   
+  '/seasons/{serieId}':
+    post:
+      deprecated: true
+      summary: >
+        Add a season to a serie given its id
+      tags: [Serie]
+      parameters:
+        - name: serieId
+          description: The serie id to fetch
+          required: true
+          in: path
+          schema:
+            type: string
+            example: 4a2f
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SeasonDetail'
+      responses:
+        404:
+          description: >
+            The serie given an id does not exists
+        204:
+          description: >
+            the season was successfully added to the given serie
+  '/episodes/{serieId}':
+    post:
+      deprecated: true
+      summary: >
+        Add an episode to a serie given its id
+      tags: [Serie]
+      parameters:
+        - name: serieId
+          description: The serie id to fetch
+          required: true
+          in: path
+          schema:
+            type: string
+            example: 4a2f
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EpisodeDetail'
+      responses:
+        404:
+          description: >
+            The serie given an id does not exists
+        204:
+          description: >
+            the episode was successfully added to the given serie
+  '/episodes/{episodeId}':
+    patch:
+      deprecated: true
+      summary: >
+        Mark an episode as watched
+      tags: [Serie]
+      parameters:
+        - name: episodeId
+          description: The episode id to fetch
+          required: true
+          in: path
+          schema:
+            type: string
+            example: 4a2f
+      responses:
+        404:
+          description: >
+            The episode given an id does not exists
+        204:
+          description: >
+            the episode was successfully marked as watch
+      

@@ -47,7 +47,8 @@ class AuthController {
                 logger.error('Login attempt: User is in timeout');
                 return void wrapErr(res).Unauthorized().end('user in timeout');
         }
-        wrapOk(res.cookie('skey', result)).NoContent()
+        res.cookie('skey', result);
+        wrapOk(res).NoContent()
     }
     /**
      * Endpoint to register a new user
@@ -62,8 +63,9 @@ class AuthController {
         ) {
             logger.error('Register attempt: ill-formed body');
             res.status(400).end();
+            return;
         }
-        const result = this.service.register(body.email, body.password, );
+        const result = this.service.register(body.email, body.password);
         switch(result) {
             case 'UserAlreadyExists':
                 logger.error('Register attempt: User already exists');

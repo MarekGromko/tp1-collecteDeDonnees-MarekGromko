@@ -1,0 +1,895 @@
+openapi: '3.0.0'
+info:
+  title: 'TP2 Api doc'
+  version: 2.0.0
+
+servers:
+  - url: /api/v2
+    description: v2 base path
+
+tags: 
+  - name: Auth
+  - name: User
+  - name: Movie
+  - name: Serie
+    description: '& Season, Episode'
+
+security:
+  - AuthJwt: []
+
+components:
+  securitySchemes:
+    AuthJwt: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT 
+  schemas:
+    UserDetail:
+      type: object
+      properties:
+        username:
+          type: string
+          example: test-user
+        email:
+          type: string
+          format: email
+        role:
+          type: string
+          enum:
+            - user
+            - admin
+        favorites:
+          type: array
+    MovieDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 6907794244546cbee612c2a4
+        title:
+          type: string
+          example: Star Wars
+        genres: 
+          type: array
+          items:
+            type: string
+            example: sci-fi
+        durationMin:
+          type: number
+          example: 120
+        synposis:
+          type: string
+          example: In a galaxy not too far from here...
+        releasedAt:
+          type: string
+          format: date
+    MoviePatch:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Star Wars
+        genres: 
+          type: array
+          items: 
+            type: string
+          example: ['sci-fi', 'action']
+        durationMin:
+          type: number
+          example: 90
+        releasedAt:
+          type: string
+          example: 2012
+        synposis:
+          type: string
+          example: In a far away galaxy...
+    SerieDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 6907794244546cbee612c2a4
+        title:
+          type: string
+          example: Breaking Bad
+        genres:
+          type: array
+          items:
+            type: string
+          example: [action, suspense]
+        status:
+          type: string
+          enum: [ended, ongoing]
+    SeasonDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 6907794244546cbee612c2a4
+        serieId:
+          type: string
+          example: 6907794244546cbee612c2a4
+        seasonNo:
+          type: number
+          example: 2
+        episodeNb:
+          type: number
+          example: 12
+    EpisodeDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 6907794244546cbee612c2a4
+        title:
+          type: string
+          example: Pilote
+        serieId:
+          type: string
+          example: 6907794244546cbee612c2a4
+        seasonId:
+          type: string
+          example: 6907794244546cbee612c2a4
+        epNo: 
+          type: number
+          example: 2
+        durationMin:
+          type: number
+          example: 32
+    RatingDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 6907794244546cbee612c2a4
+        userId:
+          type: string
+          example: 6907794244546cbee612c2a4
+        target:
+          type: string
+          enum: [Movie, Episode]
+        targetId:
+          type: string
+          example: 6907794244546cbee612c2a4
+        score:
+          type: number
+          example: 5
+        review:
+          type: string
+          example: There goes my review...
+
+paths:
+  '/auth/register':
+    post:
+      summary: >
+        Register a new user
+      tags: [Auth]
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: 'some-username'
+                password:
+                  type: string
+                  example: 'soMe-p@assWorD'
+                email:
+                  type: string
+                  example: some@email.com
+      responses:
+        200:
+          description: >
+            Happy path - user was successfully registered
+        400:
+          description: >
+            Bad request - the request body does not match the required format
+        403:
+          description: >
+            Forbidden - the user password does not match, or the user is in timeout
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Password do not match
+        409:
+          description: >
+            Conflict - the user credentials (username or email) are already taken
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: 
+                    type: string
+                    example: User already exists
+                  field: 
+                    type: string
+                    example: email
+  '/auth/login':
+    post:
+      summary: >
+        Login a new user, returns a JWT for the current session
+      tags: [Auth]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username: 
+                  type: string
+                  example: test-user
+                password:
+                  type: string
+                  example: P@ssword123
+      responses:
+        200:
+          description: >
+            Happy path - User is login and JWT was created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jwt: 
+                    type: string
+                    example: qwe.asd.123
+        400:
+          description: >
+            Bad request - the request body does not match the required format
+        403:
+          description: >
+            Forbidden - the user password does not match, or the user is in timeout
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Password do not match
+  
+  '/user/me':
+    get:
+      summary: >
+        Get the details of the currently authenticated user 
+      tags: [User]
+      responses:
+        200:
+          description: >
+            Happy path - the detail of the authenticated user
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/UserDetail'
+        403:
+          description: >
+            Forbidden - the user is not authenticated
+    patch:
+      summary: >
+        Patch partialy or fully the detail of the current authenticated user
+      tags: [User]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                username: 
+                  type: string
+                  example: some-username
+                favoritesToAdd:
+                    type: array
+                    items: 
+                      type: object
+                      properties:
+                        kind: 
+                          type: string
+                          enum: [Movie, Serie]
+                        id:
+                          type: string
+                          example: 6907794244546cbee612c2a4
+                favoritesToRemove:
+                    type: array
+                    items: 
+                      type: object
+                      properties:
+                        kind: 
+                          type: string
+                          enum: [Movie, Serie]
+                        id:
+                          type: string
+                          example: 6907794244546cbee612c2a4
+      responses:
+        204:
+          description: >
+            Happy path - user details was successfully patched
+        403:
+          description: >
+            Forbidden - the user is not authenticated
+        400:
+          description: >
+            Bad request - the request body does not match the required format
+  '/user/{userId}':
+    get:
+      summary: 
+        ADMIN ONLY - 
+        Get the detail of a given user
+      tags: [User]
+      parameters:
+        - name: id
+          description: The media id to fetch
+          required: true
+          in: path
+          schema:
+            type: string
+            example: 4a2f
+      responses:
+        200:
+          description: 
+            Happy path - successfully retrieved the details of a given user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDetail"
+        400:
+          description:
+            Bad request - The id is not a valid BSON ObjectId
+        404:
+          description:
+            Not Found - The user does not exists
+  
+  '/movie':
+    get:
+      summary: >
+        Get all movies matching the given query parameters
+      tags: [Movie]
+      parameters:
+        - name: title
+          description: is contained in the movie title - ignore case
+          in: query
+          required: false
+          schema:
+            type: string
+            example: star
+        - name: genre
+          description: Match the full genre - ignore case
+          in: query
+          required: false
+          schema:
+            type: string
+            example: sci-fi
+        - name: minYear
+          description: Lower bound to released date year
+          in: query
+          required: false
+          schema:
+            type: number
+            example: 2006
+        - name: maxDur
+          description: Upper bound to released date year
+          in: query
+          required: false
+          schema:
+            type: number
+            example: 100
+        - name: page
+          description: Page index (starts at 1)
+          in: query
+          required: false
+          schema:
+            type: number
+            example: 1
+        - name: limit
+          description: The page size
+          in: query
+          required: false
+          schema:
+            type: number
+            example: 4
+      responses:
+        200:
+          description: >
+            Happy path - Successfully search for matching movies, may be empty
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results: 
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MovieDetail'
+                  total:
+                    type: number
+                    example: 2
+                  page:
+                    type: number
+                    example: 1
+                  pageSize:
+                    type: number
+                    example: 12
+    post:
+      summary: >
+        ADMIN ONLY - 
+        Create a new movie
+      tags: [Movie]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MoviePatch'
+      responses:
+        201:
+          description: >
+            Happy path - the serie was successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieDetail'
+        400:
+          description: >
+            Bad request - the request body does not match the required format
+  '/movie/{movieId}':
+    get:
+      summary: >
+        Get the details of a single movie given its id
+      tags: [Movie]
+      parameters:
+        - name: movieId
+          description: The movie id to fetch
+          required: true
+          in: path
+          schema:
+            type: string
+            example: 6907794244546cbee612c2a4
+      responses:
+        200:
+          description: >
+            Happy path - the movie was successfully found given an id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieDetail'
+        400:
+          description: >
+            Bad request - the id is not a valid BSON ObjectId
+        404:
+          description: >
+            Not found - could not find the movie matching the given id
+    patch:
+      summary: >
+        ADMIN ONLY - 
+        Patch partially or fully a given movie
+      tags: [Movie]
+      parameters:
+        - name: movieId
+          description: The movie id to fetch
+          required: true
+          in: path
+          schema:
+            type: string
+            example: 6907794244546cbee612c2a4
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MoviePatch'
+      responses:
+        204:
+          description: >
+            Happy path - the serie was successfully patched
+        400:
+          description: >
+            Bad request - the id is not a valid BSON ObjectId
+        404:
+          description: >
+            Not found - could not find the movie matching the given id
+    delete:
+      summary: >
+        ADMIN ONLY - 
+        Delete a given movie
+      tags: [Movie]
+      parameters:
+        - name: movieId
+          description: The movie id to fetch
+          required: true
+          in: path
+          schema:
+            type: string
+            example: 6907794244546cbee612c2a4
+      responses:
+        204:
+          description: >
+            Happy path - the movie was successfully deleted or it never existed
+        400:
+          description: >
+            Bad request - the id is not a valid BSON ObjectId
+
+  '/serie': 
+    get:
+      summary: >
+        Get all series matching the given query parameters
+      tags: [Serie]
+      parameters:
+        - name: title
+          description: Is contained in the title - ignore case
+          in: query
+          required: false
+          schema:
+            type: string
+            example: star
+        - name: genre
+          description: Match the full genre - ignore case
+          in: query
+          required: false
+          schema:
+            type: string
+            example: sci-fi
+        - name: status
+          description: Lower bound to released date year
+          in: query
+          required: false
+          schema:
+            type: number
+            enum: [ongoing, ended]
+        - name: page
+          description: Page index (starts at 1)
+          in: query
+          required: false
+          schema:
+            type: number
+            example: 1
+        - name: limit
+          description: The page size
+          in: query
+          required: false
+          schema:
+            type: number
+            example: 4
+      responses:
+        200:
+          description: >
+            Happy path - Successfully search for matching series, may be empty
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results: 
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SerieDetail'
+                  total:
+                    type: number
+                    example: 2
+                  page:
+                    type: number
+                    example: 1
+                  pageSize:
+                    type: number
+                    example: 12
+    post:
+      summary: >
+        ADMIN ONLY - 
+        Create a new serie
+      tags: [Serie]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Breaking Bad
+                genres:
+                  type: array
+                  items:
+                    type: string
+                statis:
+                  type: string
+                  enum: [ended, ongoing]
+      responses:
+        201:
+          description: >
+            Happy path - successfully create a new serie
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SerieDetail'
+        403:
+          description: >
+            Forbidden - user does not have the required privileges
+        400:
+          description: >
+            Bad request - the request body does not match the required format
+  '/serie/{serieId}/season':
+    post:
+      summary: >
+        ADMIN ONLY - 
+        Create a new season children to a serie
+      tags: [Serie]
+      parameters:
+        - name: serieId
+          description: The serie id to fetch
+          required: true
+          in: path
+          schema:
+            type: string
+            example: 6907794244546cbee612c2a4
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                seasonNo:
+                  type: number
+                  example: 1
+                episodeNb:
+                  type: number
+                  example: 4
+      responses:
+        201:
+          description: >
+            Happy path - successfully create a new season
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SeasonDetail'
+        403:
+          description: >
+            Forbidden - user does not have the required privileges
+        400:
+          description: >
+            Bad request - 
+            the request body does not match the required format, 
+            or the serie id is not a valid BSON ObjectId
+  '/serie/{serieId}/season/{seasonId}/episode':
+    get:
+      summary: >
+        Search episodes matching both path & query params
+      tags: [Serie]
+      parameters:
+        - name: serieId
+          description: The parent serie id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 6907794244546cbee612c2a4
+        - name: seasonId
+          description: The parent season id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 6907794244546cbee612c2a4
+        - name: title
+          description: Is contained in the episode title - ignore case
+          in: query
+          required: false
+          schema:
+            type: string
+            example: star
+        - name: minDuration
+          description: Lower bound for episode duration
+          in: query
+          required: false
+          schema:
+            type: string
+            example: star
+        - name: page
+          description: Page index (starts at 1)
+          in: query
+          required: false
+          schema:
+            type: number
+            example: 1
+        - name: limit
+          description: The page size
+          in: query
+          required: false
+          schema:
+            type: number
+            example: 4
+      responses:
+        200:
+          description: >
+            Happy path - Successfully search for matching episodes, may be empty
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results: 
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/EpisodeDetail'
+                  total:
+                    type: number
+                    example: 2
+                  page:
+                    type: number
+                    example: 1
+                  pageSize:
+                    type: number
+                    example: 12
+        400:
+          description: >
+            Bad Request - the season id or the serie id is not a valid BSON ObjectId 
+    post:
+      summary: >
+        ADMIN ONLY - 
+        Create a new episode binded to a given serie & season
+      tags: [Serie]
+      parameters:
+        - name: serieId
+          description: The parent serie id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 6907794244546cbee612c2a4
+        - name: seasonId
+          description: The parent season id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 6907794244546cbee612c2a4
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Pilote
+                epNo:
+                  type: number
+                  example: 1
+                durationMin:
+                  type: number
+                  example: 32
+      responses:
+        201:
+          description: >
+            Happy path - successfully create a new episode
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EpisodeDetail'
+        403:
+          description: >
+            Forbidden - user does not have the required privileges
+        400:
+          description: >
+            Bad request - 
+            the request body does not match the required format, 
+            or the serie id or the season id is not a valid BSON ObjectId
+
+  '/rating':
+    post:
+      summary: >
+        USER ONLY - 
+        Create a new rating by the current authenticated user 
+      tags: [Rating]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                target:
+                  type: string
+                  enum: [Movie, Episode]
+                targetId:
+                  type: string
+                  example: 6907794244546cbee612c2a4
+                score:
+                  type: number
+                  example: 5
+                review:
+                  type: string
+                  example: Here goes my review...
+      responses:
+        201:
+          description: >
+            Happy path - Successfully created a new rating
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RatingDetail'
+        400:
+          description: >
+            Bad request - the request body does not match the required format
+        403:
+          description: >
+            Forbidden - the user is not authenticated
+        404: 
+          description: >
+            Not found - could not find the target matching the given id
+  '/rating/avg/movie/{movieId}':
+    get:
+      summary: >
+        Get the average rating for a given movie
+      tags: [Rating]
+      parameters:
+        - name: movieId
+          description: The movie id to fetch
+          required: true
+          in: path
+          schema:
+            type: string
+            example: 6907794244546cbee612c2a4
+      responses:
+        200:
+          description: >
+            Happy path - Successfully compute the average rating for the given media
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: number
+                    example: 4
+                  average:
+                    type: number
+                    example: 7.5
+        400:
+          description: >
+            Bad request - the movie id is not a valid BSON ObjectId
+        404:
+          description: >
+            Not found - could not find the movie matching the given id
+  
+  '/rating/avg/serie/{serieId}':
+    get:
+      summary: >
+        Get the average rating for a given movie
+      parameters:
+        - name: serieId
+          description: The serie id to fetch
+          required: true
+          in: path
+          schema:
+            type: string
+            example: 6907794244546cbee612c2a4
+      tags: [Rating]
+      responses:
+        200:
+          description: >
+            Happy path - Successfully compute the average rating for the given media
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: number
+                    example: 4
+                  average:
+                    type: number
+                    example: 7.5
+        400:
+          description: >
+            Bad request - the serie id is not a valid BSON ObjectId
+        404:
+          description: >
+            Not found - could not find the serie matching the given id
+      
+
+

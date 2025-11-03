@@ -2,6 +2,7 @@ import { Rating } from "../model/rating.model"
 import ajv, { JSONSchemaType } from "../setup/ajv.setup"
 
 export interface RatingDetailResponse {
+    id: string
     userId: string
     target: 'Movie' | 'Episode',
     targetId: string,
@@ -10,6 +11,7 @@ export interface RatingDetailResponse {
 }
 export namespace RatingDetailResponse {
     export const fromModel = (model: Rating.Model): RatingDetailResponse => ({
+        id: model._id.toString('hex'),
         userId: model.userRef._id.toString('hex'),
         target: model.targetKind,
         targetId: model.targetRef._id.toString('hex'),

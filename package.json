@@ -23,6 +23,7 @@
         "@types/mocha": "^10.0.10",
         "@types/node": "^24.5.2",
         "@types/sanitize-html": "^2.16.0",
+        "@types/swagger-ui-express": "^4.1.8",
         "chai": "^6.0.1",
         "config": "^4.1.1",
         "mocha": "^11.7.2",
@@ -41,6 +42,7 @@
         "mongoose": "^8.19.2",
         "reflect-metadata": "^0.2.2",
         "sanitize-html": "^2.17.0",
+        "swagger-ui-express": "^5.0.1",
         "tsx": "^4.20.6",
         "typed-inject": "^5.0.0",
         "winston": "^3.17.0"
