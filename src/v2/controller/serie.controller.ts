@@ -43,6 +43,7 @@ export class SerieController {
         private readonly serieService: SerieService
     ) {}
 
+    @Middleware(LoggerMw)
     @Route("GET", "/")
     getSeries: RequestHandler = async (req, res)=>{
         const {
@@ -73,6 +74,7 @@ export class SerieController {
         wrapOk(res).Ok().end(response);
     }
 
+    @Middleware(LoggerMw)
     @Middleware(PreAuthorizeMw(user=>user.role === 'admin'))
     @Middleware(ValidationMw(PostSerieRequest.validation))
     @Route("POST", "/")
@@ -86,6 +88,7 @@ export class SerieController {
         wrapOk(res).Created().end(SerieDetailResponse.fromModel(serie));
     }
 
+    @Middleware(LoggerMw)
     @Middleware(PreAuthorizeMw(user=>user.role === 'admin'))
     @Middleware(ValidationMw(PostSeasonRequest.validation))
     @Middleware(ValidateParamSerieIdMw)
@@ -102,6 +105,7 @@ export class SerieController {
         wrapOk(res).Created().end(SeasonDetailResponse.fromModel(season));
     }
 
+    @Middleware(LoggerMw)
     @Middleware(PreAuthorizeMw(user=>user.role === 'admin'))
     @Middleware(ValidationMw(PostEpisodeRequest.validation))
     @Middleware(ValidateParamSerieIdMw)
@@ -122,6 +126,7 @@ export class SerieController {
         wrapOk(res).Created().end(EpisodeDetailResponse.fromModel(episode));
     }
 
+    @Middleware(LoggerMw)
     @Middleware(ValidateParamSerieIdMw)
     @Middleware(ValidateParamEpisodeIdMw)
     @Route("GET", "/:serieId/season/:seasonId/episode")

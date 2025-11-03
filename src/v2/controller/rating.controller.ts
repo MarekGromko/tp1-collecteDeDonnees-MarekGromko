@@ -46,6 +46,7 @@ export class RatingController {
         wrapOk(res).Created().end(RatingDetailResponse.fromModel(result));
     }
 
+    @Middleware(LoggerMw)
     @Route("GET", "/avg/movie/:movieId")
     movieRatingAverage: RequestHandler = async (req, res)=>{
         const { movieId } = req.params;
@@ -67,6 +68,7 @@ export class RatingController {
         return wrapOk(res).Ok().end({count: result.count, average: result.averageScore});
     }
 
+    @Middleware(LoggerMw)
     @Route("GET", "/avg/serie/:serieId")
     serieRatingAverage: RequestHandler = async (req, res)=>{
         const { serieId } = req.params;

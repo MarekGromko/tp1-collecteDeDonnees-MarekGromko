@@ -19,6 +19,7 @@ log:
   user:
     level: info
     path: ./logs/user.log
+    
 auth:
   password:
     salt-rounds: 2
@@ -28,8 +29,8 @@ auth:
     secret: my-jwt-secret
     expires-in: t6h
 db:
-  uri: mongodb://127.0.0.1:27017/tp2-cdd
-  init-load: always
+  #uri: mongodb://127.0.0.1:27017/tp2-cdd
+  init-load: never
   seed-filepath: './data/v2/seed.yml'
 server:
   port: 8080

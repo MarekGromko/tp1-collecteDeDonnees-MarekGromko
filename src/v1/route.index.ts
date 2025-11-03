@@ -10,6 +10,3 @@ index.use(require('./route/serie.route.ts').default);
 index.use(require('./route/user.route.ts').default);
 
 export default index;
-// app.listen(SERVER_PORT, ()=>{
-//     console.log(`listening on port ${SERVER_PORT}`);
-// });
