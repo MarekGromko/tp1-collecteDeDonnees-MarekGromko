@@ -7,7 +7,8 @@
     "type": "commonjs",
     "main": "index.js",
     "scripts": {
-        "dev": "NODE_ENV=development tsx --watch ./src/app.ts",
+        "dev":  "NODE_ENV=development tsx --watch ./src/app.ts",
+        "prod": "NODE_ENV=production tsx ./src/app.ts",
         "test": "mocha",
         "test:coverage": "nyc npx mocha"
     },

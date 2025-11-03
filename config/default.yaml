@@ -29,8 +29,6 @@ auth:
     secret: my-jwt-secret
     expires-in: t6h
 db:
-  uri: mongodb://127.0.0.1:27017/tp2-cdd
   init-load: never
-  seed-filepath: './data/v2/seed.yml'
 server:
   port: 8080

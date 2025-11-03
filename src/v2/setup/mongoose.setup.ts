@@ -9,8 +9,11 @@ import { Season } from "../model/season.mode";
 import { Episode } from "../model/episode.model";
 import { Rating } from "../model/rating.model";
 
+const datasource = config.get<any>("db");
+
 const seedDb = async ()=>{
-    const seed = YAML.load( readFileSync(config.get<string>("db.seed-filepath"), 'utf-8') ) as any;
+    if(datasource['init-load'] !== 'always') return;
+    const seed = YAML.load(readFileSync(datasource["seed-filepath"], 'utf-8')) as any;
     await mongoose.connection.dropDatabase();
     await User.Model.insertMany(seed.User);
     await Movie.Model.insertMany(seed.Movie);
@@ -20,7 +23,6 @@ const seedDb = async ()=>{
     await Rating.Model.insertMany(seed.Rating);
 }
 
-const datasource = config.get<any>("db");
 const uri = datasource['env-uri'] ?
             process.env.DB_URI : 
             datasource.uri;

@@ -1,4 +1,4 @@
 db:
-  env-uri: true
+  uri: mongodb://127.0.0.1:27017/tp2-cdd-dev
   init-load: always
   seed-filepath: './data/v2/seed.yml'
