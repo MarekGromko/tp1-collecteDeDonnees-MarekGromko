@@ -12,7 +12,11 @@ import { Rating } from "../model/rating.model";
 const datasource = config.get<any>("db");
 
 const seedDb = async ()=>{
-    if(datasource['init-load'] !== 'always') return;
+    if(datasource['init-load'] === 'never') return;
+    if(datasource['init-load'] === 'once') {
+        if((await mongoose.connection.listCollections()).length > 0)
+            return;
+    } 
     const seed = YAML.load(readFileSync(datasource["seed-filepath"], 'utf-8')) as any;
     await mongoose.connection.dropDatabase();
     await User.Model.insertMany(seed.User);
