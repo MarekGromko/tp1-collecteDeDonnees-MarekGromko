@@ -3,6 +3,13 @@ const Parser = require('config/parser');
 const REGEXP_FULL_VALUE_ENV    = /^\$[a-z-A-Z0-9_]+$/
 const REGEXP_INTERPO_VALUE_ENV = /(?<!\\)\$\{([a-z-A-Z-0-9_]+)(\:\-[^\}]*)?\}/g
 const CONFIG_SKIP_MISSING_ENV  = Boolean(process.env.CONFIG_SKIP_MISSING_ENV);
+const BOOLEAN_COERCABLE = {
+    'true': true,
+    'false': false,
+    'yes': true,
+    'no': false,
+    'nil': false
+}
 
 const injectUnknow = (unknow)=>{
     if(typeof unknow === 'object' && unknow !== null) {
@@ -46,8 +53,15 @@ const deferEnvValue = (name, fallback = undefined, coerce = true)=>{
         }
     }
     if (coerce) {
-        let valueAsNumber = Number(value).valueOf();
-        return isNaN(valueAsNumber) ? value : valueAsNumber;
+        // coerce number
+        let cvalue = Number(value).valueOf();
+        if(!isNaN(cvalue))
+            return cvalue;
+
+        // coerce boolean
+        cvalue = BOOLEAN_COERCABLE[value.toLowerCase().trim()];
+        if(typeof cvalue === 'boolean')
+            return cvalue;
     }
     return value;
 }
