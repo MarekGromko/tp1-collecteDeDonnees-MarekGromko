@@ -26,5 +26,4 @@ const seedDb = async ()=>{
     await Episode.Model.insertMany(seed.Episode);
     await Rating.Model.insertMany(seed.Rating);
 }
-
 mongoose.connect(datasource.uri).then(seedDb);
