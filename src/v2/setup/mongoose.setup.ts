@@ -27,8 +27,4 @@ const seedDb = async ()=>{
     await Rating.Model.insertMany(seed.Rating);
 }
 
-const uri = datasource['env-uri'] ?
-            process.env.DB_URI : 
-            datasource.uri;
-            
-mongoose.connect(uri).then(seedDb);
+mongoose.connect(datasource.uri).then(seedDb);

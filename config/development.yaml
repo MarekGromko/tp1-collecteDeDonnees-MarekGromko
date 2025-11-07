@@ -1,3 +1,12 @@
+auth:
+  password:
+    salt-rounds: 2
+    lockout-duration: t5m
+    max-attempts: 5
+  jwt:
+    secret: ${DEV_JWT_SECRET:-my-jwt-secret}
+    expires-in: t6h
+
 db:
   uri: mongodb://127.0.0.1:27017/tp2-cdd-dev
   init-load: always

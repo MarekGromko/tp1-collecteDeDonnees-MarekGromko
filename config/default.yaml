@@ -26,7 +26,6 @@ auth:
     lockout-duration: t5m
     max-attempts: 5
   jwt:
-    secret: my-jwt-secret
     expires-in: t6h
 db:
   init-load: never

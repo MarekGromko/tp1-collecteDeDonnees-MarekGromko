@@ -1,4 +1,13 @@
+auth:
+  password:
+    salt-rounds: 12
+    lockout-duration: t5m
+    max-attempts: 5
+  jwt:
+    secret: $PROD_JWT_SECRET
+    expires-in: t6h
+
 db:
-  env-uri: true
+  uri: $DB_URI
   init-load: once
   seed-filepath: './data/v2/seed.yml'

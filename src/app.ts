@@ -1,8 +1,6 @@
 import "@common/global/duration.impl";
+import "@common/setup.config";
 import "reflect-metadata";
-
-import dotenv from "dotenv";
-dotenv.config({quiet: true});
 
 import config from "config";
 import express, { Request, Response } from "express";
