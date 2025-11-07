@@ -175,12 +175,12 @@ paths:
                   example: 'some-username'
                 password:
                   type: string
-                  example: 'soMe-p@assWorD'
+                  example: 'soMe-p@assWorD123'
                 email:
                   type: string
                   example: some@email.com
       responses:
-        200:
+        201:
           description: >
             Happy path - user was successfully registered
         400:
@@ -344,6 +344,9 @@ paths:
         400:
           description:
             Bad request - The id is not a valid BSON ObjectId
+        403:
+          description: >
+            Forbidden - user does not have the required privileges
         404:
           description:
             Not Found - The user does not exists
@@ -436,6 +439,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MovieDetail'
+        403:
+          description: >
+            Forbidden - user does not have the required privileges
         400:
           description: >
             Bad request - the request body does not match the required format
@@ -491,6 +497,9 @@ paths:
         400:
           description: >
             Bad request - the id is not a valid BSON ObjectId
+        403:
+          description: >
+            Forbidden - user does not have the required privileges
         404:
           description: >
             Not found - could not find the movie matching the given id
@@ -511,6 +520,9 @@ paths:
         204:
           description: >
             Happy path - the movie was successfully deleted or it never existed
+        403:
+          description: >
+            Forbidden - user does not have the required privileges
         400:
           description: >
             Bad request - the id is not a valid BSON ObjectId
